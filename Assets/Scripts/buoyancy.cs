@@ -33,7 +33,7 @@ public class buoyancy : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rigidbody.AddForce(-transform.right * 25.0f, ForceMode.Force);
+        rigidbody.AddForce(-transform.right * 10.0f, ForceMode.Force);
         rigidbody.AddTorque(new Vector3(0.0f, movement * 55.0f, 0.0f), ForceMode.Force);
         floatersUnderwater = 0;
         for (int i = 0; i < floaters.Length; i++)
