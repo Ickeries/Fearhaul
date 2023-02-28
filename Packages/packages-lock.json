@@ -1,47 +1,5 @@
 {
   "dependencies": {
-    "com.nickmaltbie.openkcc": {
-      "version": "git+https://github.com/nicholas-maltbie/OpenKCC.git#release/latest",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.nickmaltbie.screenmanager": "3.0.0",
-        "com.nickmaltbie.statemachineunity": "1.2.1",
-        "com.nickmaltbie.testutilsunity": "1.0.0",
-        "com.unity.inputsystem": "1.0.0",
-        "com.unity.textmeshpro": "3.0.0"
-      },
-      "hash": "b8bb366fd7bd0c8de526cfe7f47b2d90e666295d"
-    },
-    "com.nickmaltbie.screenmanager": {
-      "version": "https://github.com/nicholas-maltbie/ScreenManager.git#release/latest",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.inputsystem": "1.0.2",
-        "com.unity.textmeshpro": "3.0.6"
-      },
-      "hash": "89e8d1d27fc02bf6f08f4bb767ed905d002fde59"
-    },
-    "com.nickmaltbie.statemachineunity": {
-      "version": "https://github.com/nicholas-maltbie/StateMachineUnity.git#release/latest",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.nickmaltbie.testutilsunity": "0.0.2",
-        "com.unity.inputsystem": "1.0.0"
-      },
-      "hash": "089776982907cb4cb204c747c870a38cb1103f47"
-    },
-    "com.nickmaltbie.testutilsunity": {
-      "version": "https://github.com/nicholas-maltbie/TestUtilsUnity.git#release/latest",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.inputsystem": "1.0.0"
-      },
-      "hash": "d012660e496511fe08defd433bc9eccf8902ded3"
-    },
     "com.siccity.gltfutility": {
       "version": "https://github.com/siccity/gltfutility.git",
       "depth": 0,

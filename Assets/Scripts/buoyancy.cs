@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class buoyancy : MonoBehaviour
 {
@@ -16,17 +17,24 @@ public class buoyancy : MonoBehaviour
     int floatersUnderwater;
     bool underwater;
 
+    private float movement = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = this.GetComponent<Rigidbody>();
     }
 
+    void OnMove(InputValue movementValue)
+    {
+        movement = movementValue.Get<Vector2>().x;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        rigidbody.AddForce(new Vector3(20.0f, 0.0f, 0.0f), ForceMode.Force);
-
+        rigidbody.AddForce(-transform.right * 25.0f, ForceMode.Force);
+        rigidbody.AddTorque(new Vector3(0.0f, movement * 55.0f, 0.0f), ForceMode.Force);
         floatersUnderwater = 0;
         for (int i = 0; i < floaters.Length; i++)
         {

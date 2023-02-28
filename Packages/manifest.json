@@ -1,9 +1,5 @@
 {
   "dependencies": {
-    "com.nickmaltbie.openkcc": "git+https://github.com/nicholas-maltbie/OpenKCC.git#release/latest",
-    "com.nickmaltbie.screenmanager": "https://github.com/nicholas-maltbie/ScreenManager.git#release/latest",
-    "com.nickmaltbie.statemachineunity": "https://github.com/nicholas-maltbie/StateMachineUnity.git#release/latest",
-    "com.nickmaltbie.testutilsunity": "https://github.com/nicholas-maltbie/TestUtilsUnity.git#release/latest",
     "com.siccity.gltfutility": "https://github.com/siccity/gltfutility.git",
     "com.unity.collab-proxy": "2.0.0",
     "com.unity.feature.development": "1.0.1",
