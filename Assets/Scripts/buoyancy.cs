@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class buoyancy : MonoBehaviour
+public class Buoyancy : MonoBehaviour
 {
     public Transform[] floaters;
 
@@ -33,13 +33,10 @@ public class buoyancy : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rigidbody.AddForce(-transform.right * 10.0f, ForceMode.Force);
-        rigidbody.AddTorque(new Vector3(0.0f, movement * 55.0f, 0.0f), ForceMode.Force);
         floatersUnderwater = 0;
         for (int i = 0; i < floaters.Length; i++)
         {
             float difference = floaters[i].position.y - waterHeight;
-            Debug.Log("Hello");
             if (difference < 0)
             {
                 rigidbody.AddForceAtPosition(Vector3.up * floatingPower * Mathf.Abs(difference), floaters[i].position, ForceMode.Force);
@@ -71,5 +68,10 @@ public class buoyancy : MonoBehaviour
             rigidbody.drag = airDrag;
             rigidbody.angularDrag = airAngularDrag;
         }
+    }
+
+    public bool is_underwater()
+    {
+        return underwater;
     }
 }

@@ -5,29 +5,31 @@ using UnityEngine.InputSystem;
 
 public class CameraPivot : MonoBehaviour
 {
+    public Transform follow;
+
 
     private float movement = 0.0f;
+    private Vector3 targetRotation;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
+ 
+    void OnLook(InputValue movementValue)
+    {
+        transform.Rotate(0.0f, movementValue.Get<Vector2>().x * 0.25f, 0.0f, Space.Self);
+    }
+
     void Update()
     {
-        
-    }
-
-    void OnMove(InputValue movementValue)
-    {
-        movement = movementValue.Get<Vector2>().x;
-       
-    }
-
-    void FixedUpdate()
-    {
-        transform.Rotate(new Vector3(0.0f, movement * 50.0f * Time.deltaTime, 0.0f));
+        transform.position = follow.position;
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
     }
 }
