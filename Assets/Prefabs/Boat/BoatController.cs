@@ -9,8 +9,9 @@ public class BoatController : MonoBehaviour
     private Vector3 movement;
     private Rigidbody rigidbody;
 
-    public float boat_speed = 150.0f;
+    public float boat_speed = 10.0f;
     public float boat_rotation_speed = 1.0f;
+    public float jump_strength = 10.0f;
     
     // Start is called before the first frame update
     void Start()
@@ -25,8 +26,13 @@ public class BoatController : MonoBehaviour
         movement.z = movementValue.Get<Vector2>().y;
     }
 
+    void OnHop()
+    {
+        rigidbody.AddForce(new Vector3(0.0f, jump_strength, 0.0f), ForceMode.Impulse);
+    }
+
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // Calculates input direction with respect to camera direction to create a final input
         Vector3 forward = Camera.main.transform.forward;
@@ -36,13 +42,19 @@ public class BoatController : MonoBehaviour
         Vector3 final_input = forward_input + right_input;
 
         // Add forces and rotation to the boat. We lerp the rotation so that we don't snap too quickly to the desired rotation
-        if (movement != Vector3.zero && bouyancy.is_underwater() == true)
+        if (movement != Vector3.zero)
         {
             Vector3 force_vector = new Vector3(final_input.x, 0.0f, final_input.z);
             Quaternion targetRotation = Quaternion.LookRotation(force_vector);
-            Quaternion lerpedRotation = Quaternion.Slerp(rigidbody.rotation, targetRotation, boat_rotation_speed * Time.deltaTime);
+            Quaternion lerpedRotation = Quaternion.Slerp(rigidbody.rotation, targetRotation, boat_rotation_speed);
             rigidbody.MoveRotation(lerpedRotation);
-            rigidbody.AddForce(transform.forward * boat_speed * Time.fixedDeltaTime);
+
+            if (bouyancy.is_underwater() == true)
+            {
+                rigidbody.AddForce(transform.forward * boat_speed, ForceMode.Force);
+            }
         }
+
+        rigidbody.AddForce(Physics.gravity, ForceMode.Acceleration);
     }
 }

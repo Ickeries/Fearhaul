@@ -50,7 +50,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3602331264833101322
 Transform:
   m_ObjectHideFlags: 0
@@ -182,7 +182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2416531644721982388
 Transform:
   m_ObjectHideFlags: 0
@@ -279,7 +279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6105578077402374991
 Transform:
   m_ObjectHideFlags: 0
@@ -462,6 +462,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boat_speed: 150
   boat_rotation_speed: 1
+  jump_strength: 10
 --- !u!114 &5487683818830907871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,7 +511,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6691417145417246387
 Transform:
   m_ObjectHideFlags: 0

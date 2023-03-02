@@ -229,9 +229,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 363678446}
     - target: {fileID: 7471644863354360603, guid: 454edde63ac5aa24e88ab4a3de74006c, type: 3}
+      propertyPath: boat_speed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471644863354360603, guid: 454edde63ac5aa24e88ab4a3de74006c, type: 3}
       propertyPath: camera_transform
       value: 
       objectReference: {fileID: 1148635474}
+    - target: {fileID: 7471644863354360603, guid: 454edde63ac5aa24e88ab4a3de74006c, type: 3}
+      propertyPath: boat_rotation_speed
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 7939395337701400747, guid: 454edde63ac5aa24e88ab4a3de74006c, type: 3}
       propertyPath: m_Name
       value: Boat
