@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class BoatController : MonoBehaviour
 {
-    private Buoyancy bouyancy;
+    private Buoyancy buoyancy;
     private Vector3 movement;
     private Rigidbody rigidbody;
 
@@ -16,7 +16,7 @@ public class BoatController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bouyancy = GetComponent<Buoyancy>();
+        buoyancy = GetComponent<Buoyancy>();
         rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -28,7 +28,10 @@ public class BoatController : MonoBehaviour
 
     void OnHop()
     {
-        rigidbody.AddForce(new Vector3(0.0f, jump_strength, 0.0f), ForceMode.Impulse);
+		if(buoyancy.is_underwater() == true)
+		{
+			rigidbody.AddForce(new Vector3(0.0f, jump_strength, 0.0f), ForceMode.Impulse);
+		}
     }
 
     // Update is called once per frame
@@ -49,7 +52,7 @@ public class BoatController : MonoBehaviour
             Quaternion lerpedRotation = Quaternion.Slerp(rigidbody.rotation, targetRotation, boat_rotation_speed);
             rigidbody.MoveRotation(lerpedRotation);
 
-            if (bouyancy.is_underwater() == true)
+            if (buoyancy.is_underwater() == true)
             {
                 rigidbody.AddForce(transform.forward * boat_speed, ForceMode.Force);
             }

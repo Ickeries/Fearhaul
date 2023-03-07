@@ -233,7 +233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7471644863354360603, guid: 454edde63ac5aa24e88ab4a3de74006c, type: 3}
       propertyPath: boat_speed
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7471644863354360603, guid: 454edde63ac5aa24e88ab4a3de74006c, type: 3}
       propertyPath: camera_transform
