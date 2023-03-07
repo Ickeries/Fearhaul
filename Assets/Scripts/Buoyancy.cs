@@ -13,7 +13,7 @@ public class Buoyancy : MonoBehaviour
     public float airAngularDrag = 0;
     public float floatingPower = 15f;
     public float waterHeight = 0f;
-    Rigidbody rigidbody;
+    private Rigidbody rigidbody;
     int floatersUnderwater;
     bool underwater;
 
