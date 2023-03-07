@@ -25,7 +25,7 @@ public class WeaponController : MonoBehaviour
 		RaycastHit hit = getCameraRaycastHit();
 		if (hit.collider != null)
 		{
-			Debug.DrawLine(ProjectileSpawnPosition.position, hit.point, Color.white, 0.01f);
+			Debug.DrawLine(ProjectileSpawnPosition.position, hit.point, Color.white, 0.0f);
 		}
 		//Debug.DrawRay(ProjectileSpawnPosition.position, (target_position - ProjectileSpawnPosition.position)* 50.0f, Color.white, 0.01f);
 		//WeaponBase.eulerAngles = new Vector3(0.0f, Camera.main.transform.eulerAngles.y, 0.0f) ;
