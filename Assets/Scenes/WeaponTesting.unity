@@ -231,6 +231,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6919193082750228622, guid: 454edde63ac5aa24e88ab4a3de74006c, type: 3}
+      propertyPath: floatingPower
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 7396645057476718055, guid: 454edde63ac5aa24e88ab4a3de74006c, type: 3}
       propertyPath: m_IsActive
       value: 1
