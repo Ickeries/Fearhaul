@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.InputSystem;
 
 public class WeaponController : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class WeaponController : MonoBehaviour
 	public Transform WeaponBarrel;
 	public Transform ProjectileSpawnPosition;
 
+	private RaycastHit hit;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +25,7 @@ public class WeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		RaycastHit hit = getCameraRaycastHit();
+		hit = getCameraRaycastHit();
 		if (hit.collider != null)
 		{
 			Debug.DrawLine(ProjectileSpawnPosition.position, hit.point, Color.white, 0.0f);
@@ -39,6 +42,15 @@ public class WeaponController : MonoBehaviour
             this.transform.LookAt(validTargets[0].gameObject.transform);
         }
     }
+
+	void OnFire(InputValue fireValue)
+	{
+		if (hit.collider != null)
+		{
+			print(hit.collider.name);
+		}
+	}
+	
 
     List<TargetData> getValidTargets()
     {
