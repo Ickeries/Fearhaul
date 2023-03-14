@@ -14,11 +14,15 @@ public class WeaponController : MonoBehaviour
 	public Transform WeaponBarrel;
 	public Transform ProjectileSpawnPosition;
 
+    private LineRenderer BulletLine;
 	private RaycastHit hit;
+
+    private IEnumerator coroutine;
 
     // Start is called before the first frame update
     void Start()
     {
+        BulletLine = GetComponent<LineRenderer>();
         Physics.IgnoreLayerCollision(6, 4, true);
     }
 
@@ -26,12 +30,7 @@ public class WeaponController : MonoBehaviour
     void Update()
     {
 		hit = getCameraRaycastHit();
-		if (hit.collider != null)
-		{
-			Debug.DrawLine(ProjectileSpawnPosition.position, hit.point, Color.white, 0.0f);
-		}
-		//Debug.DrawRay(ProjectileSpawnPosition.position, (target_position - ProjectileSpawnPosition.position)* 50.0f, Color.white, 0.01f);
-		//WeaponBase.eulerAngles = new Vector3(0.0f, Camera.main.transform.eulerAngles.y, 0.0f) ;
+		WeaponBase.eulerAngles = new Vector3(0.0f, Camera.main.transform.eulerAngles.y, 0.0f) ;
 		WeaponBarrel.eulerAngles = new Vector3(Camera.main.transform.eulerAngles.x, Camera.main.transform.eulerAngles.y, Camera.main.transform.eulerAngles.z) ;
         // Calculates the best auto-target
         validTargets = getValidTargets();
@@ -47,10 +46,32 @@ public class WeaponController : MonoBehaviour
 	{
 		if (hit.collider != null)
 		{
-			print(hit.collider.name);
+            coroutine = AnimateLine(ProjectileSpawnPosition.position, hit.point);
+            StartCoroutine(coroutine);
+
+            Stats enemyStats = hit.collider.GetComponent<Stats>();
+            if (enemyStats != null)
+            {
+                print("LEL");
+                enemyStats.hurt(10);
+            }
 		}
 	}
 	
+    private IEnumerator AnimateLine(Vector3 startPosition, Vector3 endPosition)
+    {
+        float startTime = Time.time;
+        Vector3 pos = startPosition;
+        BulletLine.SetPosition(0, startPosition);
+        while (pos != endPosition)
+        {
+            float t = (Time.time - startTime) / 0.1f;
+            pos = Vector3.Lerp(startPosition, endPosition, t);
+            BulletLine.SetPosition(1, pos);
+            yield return null;
+        }
+        BulletLine.SetPosition(1, startPosition);
+    }
 
     List<TargetData> getValidTargets()
     {

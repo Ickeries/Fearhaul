@@ -7,7 +7,7 @@ public class BoatController : MonoBehaviour
 {
     private Buoyancy buoyancy;
     private Vector3 movement;
-    private Rigidbody rigidbody;
+    Rigidbody rigidbody;
 
     public float boat_speed = 10.0f;
     public float boat_rotation_speed = 1.0f;
