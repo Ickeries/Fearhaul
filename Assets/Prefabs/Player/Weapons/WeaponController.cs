@@ -65,7 +65,7 @@ public class WeaponController : MonoBehaviour
         BulletLine.SetPosition(0, startPosition);
         while (pos != endPosition)
         {
-            float t = (Time.time - startTime) / 0.1f;
+            float t = (Time.time - startTime) / 0.05f;
             pos = Vector3.Lerp(startPosition, endPosition, t);
             BulletLine.SetPosition(1, pos);
             yield return null;
