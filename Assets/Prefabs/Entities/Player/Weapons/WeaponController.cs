@@ -91,7 +91,7 @@ public class WeaponController : MonoBehaviour
                 TargetData data = new TargetData();
                 data.gameObject = target;
                 data.angle = targetAngle;
-                data.distance = HandleUtility.DistancePointLine(target.transform.position, Camera.main.transform.position, Camera.main.transform.position + Camera.main.transform.forward * 100.0f);
+                //data.distance = HandleUtility.DistancePointLine(target.transform.position, Camera.main.transform.position, Camera.main.transform.position + Camera.main.transform.forward * 100.0f);
                 validTargets.Add(data); 
             }
         }

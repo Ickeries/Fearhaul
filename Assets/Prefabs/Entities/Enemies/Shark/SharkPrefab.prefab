@@ -272,6 +272,7 @@ MonoBehaviour:
   health: 100
   slider: {fileID: 7952036252439394284}
   damageText: {fileID: 1159204814499036036, guid: 406fb83db45fd2047916574f281c2f81, type: 3}
+  coin: {fileID: 9184764222180386091, guid: aeba4d22308e1b74e98b6a2ea284141c, type: 3}
 --- !u!1 &3217868526873949889
 GameObject:
   m_ObjectHideFlags: 0

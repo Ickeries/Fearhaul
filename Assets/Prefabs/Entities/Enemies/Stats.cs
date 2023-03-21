@@ -8,6 +8,7 @@ public class Stats : MonoBehaviour
     public int health = 100;
     public Slider slider;
     public GameObject damageText;
+    public GameObject coin;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +31,23 @@ public class Stats : MonoBehaviour
 
         if (health <= 0)
         {
+            spawnCoins(20, transform.position);
             Destroy(this.gameObject);
         }
+    }
+
+    void spawnCoins(int amountOfCoins, Vector3 at_position)
+    {
+        for (int i = 0; i < amountOfCoins; i++)
+        {
+            var random_force = new Vector3(Random.Range(-1.0f, 1.0f) * 10.0f, Random.Range(4.0f, 8.0f) * 10.0f, Random.Range(-1.0f, 1.0f) * 10.0f);
+            GameObject coinInstance = Instantiate(coin);
+            coinInstance.transform.position = at_position;
+            // Makes all the coins shoot upwards
+            coinInstance.GetComponent<Rigidbody>().AddForce(random_force, ForceMode.Impulse);
+            
+        }
+
     }
 
 }
