@@ -7,6 +7,7 @@ public class Stats : MonoBehaviour
 {
     public int health = 100;
     public Slider slider;
+    public GameObject damageText;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class Stats : MonoBehaviour
     {
         health -= amount;
         slider.value = health / 100.0f;
+        Manager.Instance.spawnGameObject(damageText, this.transform, 10);
         if (health <= 0)
         {
             Destroy(this.gameObject);

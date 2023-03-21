@@ -271,6 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   slider: {fileID: 7952036252439394284}
+  damageText: {fileID: 1159204814499036036, guid: 406fb83db45fd2047916574f281c2f81, type: 3}
 --- !u!1 &3217868526873949889
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,6 +526,7 @@ GameObject:
   - component: {fileID: 3667434184078626648}
   - component: {fileID: 1429336337072866884}
   - component: {fileID: 4831210350034543681}
+  - component: {fileID: 5354083381517206425}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -614,6 +616,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5354083381517206425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7616344959729945578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15ad3c2631db55e47813e0c4400c9646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8283639553998610491
 GameObject:
   m_ObjectHideFlags: 0

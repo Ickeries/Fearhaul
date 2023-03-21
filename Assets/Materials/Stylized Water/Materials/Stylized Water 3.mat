@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Stylized Water 3
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 10755, guid: 0000000000000000f000000000000000, type: 0}
   m_ValidKeywords: []
   m_InvalidKeywords:
   - FANCY_SHADOWS
@@ -69,6 +69,7 @@ Material:
     - _WaveNormalScale: 25
     - _WaveNormalSpeed: 0.05
     m_Colors:
+    - _Color: {r: 0.3066038, g: 0.5199629, b: 1, a: 1}
     - _DeepColor: {r: 0.20392156, g: 1, b: 0.6917215, a: 1}
     - _EdgeFoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _FarColor: {r: 0.121033944, g: 0.08235295, b: 0.7058824, a: 1}
