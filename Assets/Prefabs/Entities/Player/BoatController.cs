@@ -24,10 +24,8 @@ public class BoatController : MonoBehaviour
     private Vector3 movement;
 
 
-    enum STATES { Idle, Moving, Air, Charge}
+    enum STATES { Idle, Moving, Charge, Aim}
     private STATES state = STATES.Idle;
-
-
 
     //Input
     PlayerInput playerInput;
@@ -68,9 +66,7 @@ public class BoatController : MonoBehaviour
         case STATES.Idle:
                 if (playerInput.actions["Jump"].WasPressedThisFrame())
                 {
-                    List<string> msg = new List<string>();
-                    msg.Add("jump");
-                    enter_state(STATES.Air, msg);
+                    rigidbody.AddForce(new Vector3(0.0f, jump_strength, 0.0f), ForceMode.Impulse);
                 }
                 else if (movement_vector.sqrMagnitude > 0.0f)
                 {
@@ -78,9 +74,9 @@ public class BoatController : MonoBehaviour
                 }
                 break;
         case STATES.Moving:
-                if (buoyancy.is_underwater() == false)
+                if (playerInput.actions["Jump"].WasPressedThisFrame())
                 {
-                    enter_state(STATES.Air);
+                    rigidbody.AddForce(new Vector3(0.0f, jump_strength, 0.0f), ForceMode.Impulse);
                 }
                 else if (movement_vector.sqrMagnitude == 0.0f)
                 {
@@ -108,21 +104,6 @@ public class BoatController : MonoBehaviour
                 }
                 rotateRigidBodyToVector(movement_vector, 0.2f);
                 rigidbody.AddForce(transform.forward * boat_speed * 1.25f, ForceMode.Force);
-                break;
-        case STATES.Air:
-                // If boat is currently falling
-                rotateRigidBodyToVector(movement_vector, 0.5f);
-                if (rigidbody.velocity.y < 0.0f && buoyancy.is_underwater())
-                {
-                    if(movement_vector.magnitude > 0.0f)
-                    {
-                        enter_state(STATES.Moving);
-                    }
-                    else
-                    {
-                        enter_state(STATES.Idle);
-                    }
-                }
                 break;
         }
         rigidbody.AddForce(Physics.gravity * 4.0f, ForceMode.Acceleration);
@@ -172,12 +153,6 @@ public class BoatController : MonoBehaviour
                 rigidbody.AddForceAtPosition(new Vector3(0.0f, 5.0f, 0.0f), transform.position + transform.forward * 1.0f, ForceMode.Impulse);
                 Camera.main.GetComponent<PlayerCamera>().set_to_fov(70.0f);
             break;
-        case STATES.Air: 
-            if (msg.Contains("jump"))
-            {
-                rigidbody.AddForce(new Vector3(0.0f, jump_strength, 0.0f), ForceMode.Impulse);
-            }
-            break;
         }
         state = new_state;
     }
@@ -193,8 +168,6 @@ public class BoatController : MonoBehaviour
             case STATES.Charge:
                
                 Camera.main.GetComponent<PlayerCamera>().set_to_fov(60.0f);
-                break;
-            case STATES.Air:
                 break;
         }
     }

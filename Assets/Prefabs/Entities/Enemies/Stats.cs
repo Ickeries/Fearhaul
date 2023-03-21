@@ -25,7 +25,9 @@ public class Stats : MonoBehaviour
     {
         health -= amount;
         slider.value = health / 100.0f;
-        Manager.Instance.spawnGameObject(damageText, this.transform, 10);
+        GameObject gameTextInstance = Instantiate(damageText);
+        gameTextInstance.transform.position = this.transform.position + new Vector3(0.0f, 10.0f, 0.0f);
+
         if (health <= 0)
         {
             Destroy(this.gameObject);
