@@ -180,6 +180,8 @@ GameObject:
   - component: {fileID: 870749617873273409}
   - component: {fileID: 3874127641087352890}
   - component: {fileID: 5745336896116072609}
+  - component: {fileID: 2128658325427960390}
+  - component: {fileID: 2678922387166949122}
   m_Layer: 6
   m_Name: SharkPrefab
   m_TagString: Untagged
@@ -273,6 +275,44 @@ MonoBehaviour:
   slider: {fileID: 7952036252439394284}
   damageText: {fileID: 1159204814499036036, guid: 406fb83db45fd2047916574f281c2f81, type: 3}
   coin: {fileID: 9184764222180386091, guid: aeba4d22308e1b74e98b6a2ea284141c, type: 3}
+--- !u!114 &2128658325427960390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2678491395190851778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c46d723bbfef204192099e978b20ae3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  Distance: 0
+  isAngered: 0
+  _agent: {fileID: 2678922387166949122}
+--- !u!195 &2678922387166949122
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2678491395190851778}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &3217868526873949889
 GameObject:
   m_ObjectHideFlags: 0
