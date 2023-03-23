@@ -107,7 +107,7 @@ NavMeshSettings:
     serializedVersion: 2
     agentTypeID: 0
     agentRadius: 0.5
-    agentHeight: 2
+    agentHeight: 1
     agentSlope: 45
     agentClimb: 0.4
     ledgeDropHeight: 0
@@ -824,7 +824,7 @@ Transform:
   - {fileID: 724728094}
   - {fileID: 640758463}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1132036583
 PrefabInstance:
@@ -1215,6 +1215,10 @@ PrefabInstance:
       propertyPath: m_ReflectionProbeUsage
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2658085231900413611, guid: a3bc7f8d83399a349bab00efbc51453e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 30713a051052b4d25b10f61c7c53434c, type: 2}
     - target: {fileID: 2658085231900413613, guid: a3bc7f8d83399a349bab00efbc51453e, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1286,7 +1290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7471644863354360603, guid: 454edde63ac5aa24e88ab4a3de74006c, type: 3}
       propertyPath: boat_rotation_speed
-      value: 0.1
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 7939395337701400747, guid: 454edde63ac5aa24e88ab4a3de74006c, type: 3}
       propertyPath: m_Name
@@ -1620,7 +1624,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5299824852133048081, guid: 3e9809a8a6b529f479ce4a8e11e0ef71, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5299824852133048081, guid: 3e9809a8a6b529f479ce4a8e11e0ef71, type: 3}
       propertyPath: m_LocalPosition.x

@@ -178,10 +178,10 @@ GameObject:
   - component: {fileID: 3341733694640149112}
   - component: {fileID: 717344482960904755}
   - component: {fileID: 870749617873273409}
-  - component: {fileID: 3874127641087352890}
   - component: {fileID: 5745336896116072609}
   - component: {fileID: 2128658325427960390}
   - component: {fileID: 2678922387166949122}
+  - component: {fileID: 5946869862521433258}
   m_Layer: 6
   m_Name: SharkPrefab
   m_TagString: Untagged
@@ -246,19 +246,6 @@ MonoBehaviour:
   airAngularDrag: 0
   floatingPower: 15
   waterHeight: 0
---- !u!65 &3874127641087352890
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2678491395190851778}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3, y: 3, z: 15}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5745336896116072609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,9 +289,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 2
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 80
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -313,6 +300,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!135 &5946869862521433258
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2678491395190851778}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 8
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3217868526873949889
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,7 +615,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &1429336337072866884
 MonoBehaviour:
