@@ -1,100 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &427746115963344285
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7736065670133554910}
-  m_Layer: 0
-  m_Name: ProjectileSpawnPosition
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7736065670133554910
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 427746115963344285}
-  m_LocalRotation: {x: -0.08581588, y: -0, z: -0, w: 0.996311}
-  m_LocalPosition: {x: -0.055, y: 0.116, z: 4.176}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4511253725819392966}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2274001683045489015
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4511253725819392966}
-  m_Layer: 0
-  m_Name: PivotX
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4511253725819392966
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2274001683045489015}
-  m_LocalRotation: {x: 0.08581588, y: -0, z: -0, w: 0.996311}
-  m_LocalPosition: {x: 0, y: 3.16, z: 0.98}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7736065670133554910}
-  m_Father: {fileID: 2713939586829558501}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 9.846, y: 0, z: 0}
---- !u!1 &3378272567367891039
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2713939586829558501}
-  m_Layer: 0
-  m_Name: PivotY
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2713939586829558501
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3378272567367891039}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.19605255, y: 0.61, z: -0.6421287}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4511253725819392966}
-  m_Father: {fileID: 3189492961692159175}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4188492359575457768
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +116,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5382987947154631695}
-  - {fileID: 2713939586829558501}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -228,9 +132,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAimAngle: 45
-  WeaponBase: {fileID: 2713939586829558501}
-  WeaponBarrel: {fileID: 4511253725819392966}
-  ProjectileSpawnPosition: {fileID: 7736065670133554910}
+  projectile_prefab: {fileID: 2690096911647796819, guid: 81a63f9fda881644e9dfc1b5e9280f9d, type: 3}
+  timeBetweenShooting: 0
+  spread: 0
+  reloadTime: 0
+  allowButtonHold: 0
+  shooting: 0
+  readyToShoot: 0
+  reloading: 0
+  shootForce: 100
 --- !u!135 &7971701739441511831
 SphereCollider:
   m_ObjectHideFlags: 0

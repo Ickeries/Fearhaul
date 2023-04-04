@@ -7,22 +7,23 @@ using UnityEngine.InputSystem;
 public class WeaponController : MonoBehaviour
 {
     public float maxAimAngle = 45.0f;
+    public GameObject projectile_prefab;
     List<GameObject> targets = new List<GameObject>();
     List<TargetData> validTargets = new List<TargetData>();
-	
-	public Transform WeaponBase;
-	public Transform WeaponBarrel;
-	public Transform ProjectileSpawnPosition;
 
-    private LineRenderer BulletLine;
+    public float timeBetweenShooting, spread, reloadTime;
+    public int allowButtonHold;
+    public bool shooting, readyToShoot, reloading;
+    public float shootForce = 100.0f;
+    public float upwardForce = 20.0f;
 	private RaycastHit hit;
 
-    private IEnumerator coroutine;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        BulletLine = GetComponent<LineRenderer>();
+        readyToShoot = true;
         Physics.IgnoreLayerCollision(6, 4, true);
     }
 
@@ -30,9 +31,6 @@ public class WeaponController : MonoBehaviour
     void Update()
     {
 		hit = getCameraRaycastHit();
-		WeaponBase.eulerAngles = new Vector3(0.0f, Camera.main.transform.eulerAngles.y, 0.0f) ;
-		WeaponBarrel.eulerAngles = new Vector3(Camera.main.transform.eulerAngles.x, Camera.main.transform.eulerAngles.y, Camera.main.transform.eulerAngles.z) ;
-        // Calculates the best auto-target
         validTargets = getValidTargets();
         if (validTargets.Count > 0)
         {
@@ -44,33 +42,34 @@ public class WeaponController : MonoBehaviour
 
 	void OnFire(InputValue fireValue)
 	{
-		if (hit.collider != null)
-		{
-            coroutine = AnimateLine(ProjectileSpawnPosition.position, hit.point);
-            StartCoroutine(coroutine);
-
-            Stats enemyStats = hit.collider.GetComponent<Stats>();
-            if (enemyStats != null)
-            {
-                print("LEL");
-                enemyStats.hurt(10);
-            }
-		}
+        Shoot();
 	}
-	
-    private IEnumerator AnimateLine(Vector3 startPosition, Vector3 endPosition)
+
+    private void Shoot()
     {
-        float startTime = Time.time;
-        Vector3 pos = startPosition;
-        BulletLine.SetPosition(0, startPosition);
-        while (pos != endPosition)
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+        RaycastHit hit;
+        Vector3 targetPoint;
+        if (Physics.Raycast(ray, out hit))
         {
-            float t = (Time.time - startTime) / 0.05f;
-            pos = Vector3.Lerp(startPosition, endPosition, t);
-            BulletLine.SetPosition(1, pos);
-            yield return null;
+            targetPoint = hit.point;
         }
-        BulletLine.SetPosition(1, startPosition);
+        else
+        {
+            targetPoint = ray.GetPoint(75);
+        }
+        Vector3 directionWithoutSpread = targetPoint - this.transform.position;
+
+        float x = Random.Range(-spread, spread);
+        float y = Random.Range(-spread, spread);
+        Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0.0f);
+        GameObject projectile_instance = Instantiate(projectile_prefab, this.transform.position, Quaternion.identity);
+        projectile_instance.transform.forward = directionWithSpread.normalized;
+        projectile_instance.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
+        projectile_instance.GetComponent<Rigidbody>().AddForce(Camera.main.transform.up * upwardForce, ForceMode.Impulse);
+
+
+
     }
 
     List<TargetData> getValidTargets()

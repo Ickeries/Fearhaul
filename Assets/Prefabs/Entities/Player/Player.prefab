@@ -2629,9 +2629,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c04e00c837b358148b51eba8b7220afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boat_speed: 200
+  boat_speed: 100
   boat_rotation_speed: 1
-  jump_strength: 25
+  jump_strength: 1
   jump_height: 25
   jump_time_to_peak: 1
   jump_time_to_descent: 1
@@ -2824,11 +2824,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3189492961692159175, guid: 2d01b8f75525caf48abc106cb9585efe, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 4.2
       objectReference: {fileID: 0}
     - target: {fileID: 3189492961692159175, guid: 2d01b8f75525caf48abc106cb9585efe, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3189492961692159175, guid: 2d01b8f75525caf48abc106cb9585efe, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2857,6 +2857,14 @@ PrefabInstance:
     - target: {fileID: 3189492961692159175, guid: 2d01b8f75525caf48abc106cb9585efe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084880789419014743, guid: 2d01b8f75525caf48abc106cb9585efe, type: 3}
+      propertyPath: spread
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4084880789419014743, guid: 2d01b8f75525caf48abc106cb9585efe, type: 3}
+      propertyPath: timeBetweenShooting
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5891604344686644813, guid: 2d01b8f75525caf48abc106cb9585efe, type: 3}
       propertyPath: m_Parameters.widthMultiplier

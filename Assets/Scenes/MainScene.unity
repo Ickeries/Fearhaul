@@ -1280,6 +1280,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 959227590}
     m_Modifications:
+    - target: {fileID: 2940799236168816745, guid: 454edde63ac5aa24e88ab4a3de74006c, type: 3}
+      propertyPath: spread
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940799236168816745, guid: 454edde63ac5aa24e88ab4a3de74006c, type: 3}
+      propertyPath: upwardForce
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5402734537805430152, guid: 454edde63ac5aa24e88ab4a3de74006c, type: 3}
       propertyPath: m_Materials.Array.size
       value: 0
@@ -1673,6 +1681,10 @@ PrefabInstance:
     - target: {fileID: 5299824852133048083, guid: 3e9809a8a6b529f479ce4a8e11e0ef71, type: 3}
       propertyPath: m_Name
       value: CameraPivot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299824853024064300, guid: 3e9809a8a6b529f479ce4a8e11e0ef71, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.86
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e9809a8a6b529f479ce4a8e11e0ef71, type: 3}

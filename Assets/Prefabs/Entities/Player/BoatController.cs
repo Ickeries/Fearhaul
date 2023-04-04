@@ -107,6 +107,10 @@ public class BoatController : MonoBehaviour
                 break;
         }
         rigidbody.AddForce(Physics.gravity * 4.0f, ForceMode.Acceleration);
+        if (rigidbody.velocity.magnitude > 100.0f)
+        {
+            rigidbody.velocity = rigidbody.velocity.normalized * 100.0f;
+        }
     }
 
     void update_jump_velocity()
