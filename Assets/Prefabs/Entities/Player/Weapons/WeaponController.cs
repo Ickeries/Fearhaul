@@ -40,10 +40,12 @@ public class WeaponController : MonoBehaviour
         }
     }
 
+
 	void OnFire(InputValue fireValue)
 	{
         Shoot();
 	}
+
 
     private void Shoot()
     {
@@ -96,6 +98,7 @@ public class WeaponController : MonoBehaviour
         }
         return validTargets;
     }
+
 
     private int sortByDistance(TargetData a, TargetData b)
     {

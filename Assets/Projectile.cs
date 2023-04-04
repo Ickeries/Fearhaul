@@ -5,7 +5,11 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
 
+
+
     public float timeAlive = 0.5f;
+
+    public GameObject explosion_prefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +35,8 @@ public class Projectile : MonoBehaviour
         if (other.GetComponent<Stats>())
         {
             other.GetComponent<Stats>().hurt(10);
+            GameObject explosion_instance = Instantiate(explosion_prefab, this.transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
         }
     }
 }
