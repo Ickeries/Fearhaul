@@ -34,6 +34,7 @@ public class BoatController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Physics.IgnoreLayerCollision(8, 11);
         playerInput = this.GetComponent<PlayerInput>();
         JumpActions = playerInput.actions["Jump"];
         buoyancy = GetComponent<Buoyancy>();

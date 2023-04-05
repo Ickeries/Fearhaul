@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5492357513880013491}
   - component: {fileID: 6053034862699400011}
   - component: {fileID: 3369389004659224459}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5078593077707868653}
   - component: {fileID: 7952036252439394284}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,10 +179,8 @@ GameObject:
   - component: {fileID: 717344482960904755}
   - component: {fileID: 870749617873273409}
   - component: {fileID: 5745336896116072609}
-  - component: {fileID: 2128658325427960390}
-  - component: {fileID: 2678922387166949122}
   - component: {fileID: 5946869862521433258}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: SharkPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,44 +260,6 @@ MonoBehaviour:
   slider: {fileID: 7952036252439394284}
   damageText: {fileID: 1159204814499036036, guid: 406fb83db45fd2047916574f281c2f81, type: 3}
   coin: {fileID: 9184764222180386091, guid: aeba4d22308e1b74e98b6a2ea284141c, type: 3}
---- !u!114 &2128658325427960390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2678491395190851778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c46d723bbfef204192099e978b20ae3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 0}
-  Distance: 0
-  isAngered: 0
-  _agent: {fileID: 2678922387166949122}
---- !u!195 &2678922387166949122
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2678491395190851778}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 2
-  avoidancePriority: 50
-  m_AngularSpeed: 80
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!135 &5946869862521433258
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -322,7 +282,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4944745240876978719}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Floater (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,7 +313,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3050268760482529820}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Floater (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -384,7 +344,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7455689614984367784}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Floater (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,7 +375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5472650754261644976}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Floaters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +410,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5861518854498611241}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Floater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +443,7 @@ GameObject:
   - component: {fileID: 2742706628795556640}
   - component: {fileID: 1064857743863962218}
   - component: {fileID: 4603409276910108414}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -568,7 +528,7 @@ GameObject:
   - component: {fileID: 1429336337072866884}
   - component: {fileID: 4831210350034543681}
   - component: {fileID: 5354083381517206425}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -680,7 +640,7 @@ GameObject:
   - component: {fileID: 7494007395561513565}
   - component: {fileID: 3280526709189058458}
   - component: {fileID: 5876529611486194221}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -754,7 +714,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7067737287204512739}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -791,7 +751,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5962754396682952304}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}

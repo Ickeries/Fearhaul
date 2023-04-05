@@ -25,14 +25,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 536143530929601185}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 0.2, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4650985324649961643}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
 --- !u!33 &2857931433660556441
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -106,7 +106,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6947545869152026899}
-  m_LocalRotation: {x: 0.0013657212, y: -0.005536495, z: -0.0065982463, w: 0.99996203}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -114,7 +114,7 @@ Transform:
   - {fileID: 1309013821662514015}
   m_Father: {fileID: 9184764222180386090}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0.152, y: -0.635, z: -0.757}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9184764222180386091
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,7 +124,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9184764222180386090}
-  - component: {fileID: 9184764222180387537}
   - component: {fileID: 9184764222180387540}
   - component: {fileID: 9184764222180387541}
   - component: {fileID: 9184764222180387536}
@@ -144,7 +143,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9184764222180386091}
-  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5, y: 3, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -153,15 +152,7 @@ Transform:
   - {fileID: 4650985324649961643}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
---- !u!33 &9184764222180387537
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9184764222180386091}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9184764222180387540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +228,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd59edacc1f10444a1954dd3755cd99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CoinSpeed: 0
+  player: {fileID: 0}
+  coinMagnetSpeed: 20
 --- !u!1 &9184764222250942611
 GameObject:
   m_ObjectHideFlags: 0

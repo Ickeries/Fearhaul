@@ -14,15 +14,16 @@ public class WeaponController : MonoBehaviour
     public float timeBetweenShooting, spread, reloadTime;
     public int allowButtonHold;
     public bool shooting, readyToShoot, reloading;
-    public float shootForce = 100.0f;
+    public float shootForce = 10.0f;
     public float upwardForce = 20.0f;
 	private RaycastHit hit;
+    public AnimationCurve curve;
 
-
-
+    PlayerInput weaponInput;
     // Start is called before the first frame update
     void Start()
     {
+        weaponInput = GetComponent<PlayerInput>();
         readyToShoot = true;
         Physics.IgnoreLayerCollision(6, 4, true);
     }
@@ -30,20 +31,15 @@ public class WeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		hit = getCameraRaycastHit();
-        validTargets = getValidTargets();
-        if (validTargets.Count > 0)
+        if (weaponInput.actions["Fire"].ReadValue<float>() == 1)
         {
-            validTargets.Sort(sortByDistance);
-            validTargets[0].gameObject.GetComponent<Targetable>().targeted = 0.25f;
-            this.transform.LookAt(validTargets[0].gameObject.transform);
+            Shoot();
         }
     }
 
 
 	void OnFire(InputValue fireValue)
 	{
-        Shoot();
 	}
 
 
@@ -52,14 +48,14 @@ public class WeaponController : MonoBehaviour
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
         RaycastHit hit;
         Vector3 targetPoint;
-        if (Physics.Raycast(ray, out hit))
-        {
-            targetPoint = hit.point;
-        }
-        else
-        {
-            targetPoint = ray.GetPoint(75);
-        }
+        targetPoint = ray.GetPoint(75);
+        //if (Physics.Raycast(ray, out hit))
+        //{
+        //    targetPoint = hit.point;
+        //}
+        //else
+        // {
+        // }
         Vector3 directionWithoutSpread = targetPoint - this.transform.position;
 
         float x = Random.Range(-spread, spread);
