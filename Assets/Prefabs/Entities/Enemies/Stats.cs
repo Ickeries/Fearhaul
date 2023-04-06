@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class Stats : MonoBehaviour
 {
-    public int health = 100;
+    public int max_health = 100;
+    int health = 100;
     public Slider slider;
     public GameObject damageText;
     public GameObject coin;
@@ -13,6 +14,7 @@ public class Stats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        health = max_health;
         slider.value = health;
     }
 
@@ -25,10 +27,10 @@ public class Stats : MonoBehaviour
     public void hurt(int amount)
     {
         health -= amount;
-        slider.value = health / 100.0f;
-        GameObject gameTextInstance = Instantiate(damageText);
-        gameTextInstance.transform.position = this.transform.position + new Vector3(0.0f, 10.0f, 0.0f);
+        slider.value = (float)health / (float)max_health;
+        GameObject gameTextInstance = Instantiate(damageText, this.transform.position + new Vector3(0.0f, 10.0f, 0.0f), Quaternion.identity);
 
+        print(health);
         if (health <= 0 && !dead)
         {
             dead = true;

@@ -230,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CoinSpeed: 0
   player: {fileID: 0}
-  coinMagnetSpeed: 20
+  coinMagnetSpeed: 100
 --- !u!1 &9184764222250942611
 GameObject:
   m_ObjectHideFlags: 0

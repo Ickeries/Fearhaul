@@ -5,10 +5,10 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
 
-
+    private Rigidbody rigidbody;
 
     public float timeAlive = 0.5f;
-
+    public float gravityMultiplier = 1.0f;
     public GameObject explosion_prefab;
     // Start is called before the first frame update
 
@@ -17,6 +17,10 @@ public class Projectile : MonoBehaviour
         Physics.IgnoreLayerCollision(11, 8);
     }
 
+    void Start()
+    {
+        rigidbody = GetComponent<Rigidbody>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -24,7 +28,6 @@ public class Projectile : MonoBehaviour
         timeAlive -= Time.deltaTime;
         if (timeAlive < 0.0f)
         {
-            print("Dead");
             Destroy(this.gameObject);
             
         }
@@ -39,12 +42,17 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        rigidbody.AddForce(Physics.gravity * gravityMultiplier, ForceMode.Acceleration);
+    }
 
 
     void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Stats>())
         {
+            print(other);
             other.GetComponent<Stats>().hurt(10);
         }
         if (other.gameObject.layer == 9 || other.gameObject.layer == 10)
