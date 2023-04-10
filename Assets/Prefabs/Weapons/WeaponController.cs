@@ -42,11 +42,12 @@ public class WeaponController : MonoBehaviour
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 150.0f, collideWith))
-        {
+        { 
             Ray ray2 = new Ray(pivot.transform.position, (hit.point - pivot.transform.position).normalized);
             RaycastHit hit2;
             if (Physics.Raycast(ray2, out hit2, 150.0f, collideWith))
             {
+                Debug.DrawLine(pivot.transform.position, hit2.point);
                 targetPoint = Vector3.Lerp(targetPoint, hit2.point, 10.0f * Time.deltaTime);
             }
         }

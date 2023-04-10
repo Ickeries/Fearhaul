@@ -8,15 +8,15 @@ public class BoatController : MonoBehaviour
 {
     private Buoyancy buoyancy;
     private Rigidbody rigidbody;
-    private CharacterController cc;
     // Publics
-    public  float boatSpeed = 32.0f;
+    public  float boatSpeed = 4.0f;
     public float boatChargeSpeed = 48.0f;
     public float boatRotationSpeed = 100.0f;
     public float jumpStrength = 10.0f;
     public TMP_Text currentStateText;
 
     private Vector3 force;
+    private Vector3 gravity;
     private Vector3 movement;
 
     List<GameObject> allCollisions = new List<GameObject>();
@@ -27,16 +27,13 @@ public class BoatController : MonoBehaviour
     private Quaternion toRotation;
 
     //Input
-    PlayerInput playerInput;
-    InputAction JumpActions;
-
+    PlayerInput boatInput;
     // Start is called before the first frame update
     void Start()
     {
         Physics.IgnoreLayerCollision(8, 11);
-        playerInput = this.GetComponent<PlayerInput>();
-        JumpActions = playerInput.actions["Jump"];
-        cc = GetComponent<CharacterController>();
+        boatInput = this.GetComponent<PlayerInput>();
+        rigidbody = GetComponent<Rigidbody>();
     }
 
     void OnMove(InputValue movementValue)
@@ -47,6 +44,7 @@ public class BoatController : MonoBehaviour
 
     void OnHop()
     {
+        gravity = new Vector3(0.0f, jumpStrength, 0.0f);
     }
 
     void Update()
@@ -57,8 +55,8 @@ public class BoatController : MonoBehaviour
             if (!collision.GetComponent<Stats>().isStaggered())
             {
                 Vector3 launchForce = new Vector3(Random.Range(-1.0f, 1.0f) * 2.0f * force.x, 0.1f * force.magnitude, Random.Range(-1.0f, 1.0f) * 2.0f * force.z);
-                collision.GetComponent<Stats>().launch(launchForce, 10);
-                collision.GetComponent<Stats>().hurt(10);
+                //collision.GetComponent<Stats>().launch(launchForce, 10);
+                collision.GetComponent<Stats>().addHealth(-10);
             } 
         }
         
@@ -77,6 +75,7 @@ public class BoatController : MonoBehaviour
         switch (state)
         { 
         case STATES.Idle:
+                    //gravity += new Vector3(0.0f, 200.0f, 0.0f);
                 if (movement.sqrMagnitude > 0.0f)
                 {
                     enter_state(STATES.Moving);
@@ -84,7 +83,8 @@ public class BoatController : MonoBehaviour
                 force = Vector3.Lerp(force, new Vector3(0.0f, 0.0f, 0.0f), 1.0f * Time.deltaTime);
                 break;
         case STATES.Moving:
-                if (playerInput.actions["Charge"].IsPressed())
+                //gravity += new Vector3(0.0f, 200.0f, 0.0f);
+                if (boatInput.actions["Charge"].IsPressed())
                 {
                     enter_state(STATES.Charge);
                 }
@@ -92,7 +92,7 @@ public class BoatController : MonoBehaviour
                 {
                     enter_state(STATES.Idle);
                 }
-                force = Vector3.Lerp(force, transform.forward * boatSpeed, 5.0f * Time.deltaTime);
+                force = transform.forward * boatSpeed;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, boatRotationSpeed * Time.deltaTime);
                 break;
         case STATES.Charge:
@@ -100,16 +100,17 @@ public class BoatController : MonoBehaviour
                 {
                     enter_state(STATES.Idle);
                 }
-                else if (!playerInput.actions["Charge"].IsPressed())
+                else if (!boatInput.actions["Charge"].IsPressed())
                 {
                     enter_state(STATES.Moving);
                 }
-                force = Vector3.Lerp(force, transform.forward * boatChargeSpeed, 5.0f * Time.deltaTime);
+                force = transform.forward * boatChargeSpeed;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, boatRotationSpeed * Time.deltaTime);
                 break;
         }
-        cc.Move(force * Time.deltaTime);
-        transform.position = new Vector3(transform.position.x, 0.0f, transform.position.z);
+        gravity += new Vector3(0.0f, -16.0f * Time.deltaTime, 0.0f);
+        rigidbody.AddForce(force, ForceMode.Force);
+        rigidbody.AddForce(new Vector3(0.0f, -16.0f, 0.0f), ForceMode.Acceleration);
     }
 
 

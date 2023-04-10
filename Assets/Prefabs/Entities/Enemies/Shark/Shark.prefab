@@ -92,7 +92,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5078593077707868653
 RectTransform:
   m_ObjectHideFlags: 0
@@ -270,10 +270,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b5912b33c69984b83db15b0afa79c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max_health: 100
   slider: {fileID: 7952036252439394284}
-  damageText: {fileID: 1159204814499036036, guid: 406fb83db45fd2047916574f281c2f81, type: 3}
-  coin: {fileID: 9184764222180386091, guid: aeba4d22308e1b74e98b6a2ea284141c, type: 3}
+  Loot:
+  - {fileID: 9184764222180386091, guid: aeba4d22308e1b74e98b6a2ea284141c, type: 3}
+  maxHealth: 100
 --- !u!135 &5946869862521433258
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -293,7 +293,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 4
+  m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &18884083453651908
 MonoBehaviour:
@@ -689,7 +689,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -830,7 +830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a271b2cbf7b8d744a1f527a362090bb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.17
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3a271b2cbf7b8d744a1f527a362090bb, type: 3}
       propertyPath: m_LocalRotation.w

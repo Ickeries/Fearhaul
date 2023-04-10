@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPower: 20
-  timeAlive: 5
+  staggerPower: 5
+  timeAlive: 2
   gravityMultiplier: 1
   explosion_prefab: {fileID: 4740719344561975414, guid: baa3f3b6a35466b4689dffb1363f8bc3, type: 3}

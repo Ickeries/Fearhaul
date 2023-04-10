@@ -11,13 +11,14 @@ public class SharkAi : MonoBehaviour
     private Stats stats;
     private Buoyancy buoyancy;
     private Animator animator;
+
+
     GameObject target = null;
 
+    // Wander
     private float wanderTime = 2.0f;
     private Vector3 wanderPosition = new Vector3(0.0f, 0.0f, 0.0f);
-    // Start is called before the first frame update
 
-    private float staggerTimer = 1.0f;
 
     void Start()
     {
@@ -29,25 +30,26 @@ public class SharkAi : MonoBehaviour
 
     void Update()
     {
+        // Every 5 seconds, the entity finds a close position to wander to. IF IN WANDERING mode.
         wanderTime -= Time.deltaTime;
         if (wanderTime <= 0)
         {
             wanderPosition = this.transform.position + new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f)).normalized * 32.0f;
             wanderTime = 5.0f;
         }
-
-        if (stats.getStaggerAmount() > 10)
+        // Check if entity is dead.
+        if (stats.isDead())
         {
-            state = STATES.Staggered;
-            staggerTimer = 1.0f;
-            stats.setStaggerAmount(0);
-            animator.Play("hurt", 0, 0.0f);
+            stats.spawnRandomLoot(5, this.transform.position);
+            Destroy(this.gameObject);
         }
     }
 
     void FixedUpdate()
     {
+        // Gravity
         rigidbody.AddForce(new Vector3(0.0f, -32.0f, 0.0f), ForceMode.Acceleration);
+
         Vector3 direction = new Vector3(0.0f, 0.0f, 0.0f);
         switch (state)
         {
@@ -60,7 +62,6 @@ public class SharkAi : MonoBehaviour
                     {
                         rigidbody.AddForce(direction * 50.0f, ForceMode.Force);
                     }
-                    this.transform.LookAt(wanderPosition);
                 }
 
 
@@ -77,17 +78,17 @@ public class SharkAi : MonoBehaviour
                     {
                         rigidbody.AddForce(direction * 50.0f, ForceMode.Force);
                     }
-                    this.transform.LookAt(target.transform.position);
                 }
                 break;
             case STATES.Staggered:
-                staggerTimer -= Time.deltaTime;
-                if (staggerTimer < 0.0f && buoyancy.is_underwater() == true)
-                {
-                    state = STATES.Alert;
-                }
                 break;
         }
+
+        if (direction.sqrMagnitude != 0.0f)
+        {
+            transform.forward = Vector3.Lerp(transform.forward, direction, 2.5f * Time.deltaTime);
+        }
+
     }
 
 

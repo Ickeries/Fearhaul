@@ -21,7 +21,7 @@ public class Explosion : MonoBehaviour
     {
         if (other.GetComponent<Stats>())
         {
-            other.GetComponent<Stats>().hurt(10);
+            other.GetComponent<Stats>().addHealth(-10);
         }
     }
 }

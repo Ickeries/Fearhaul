@@ -28,7 +28,7 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         timeAlive -= Time.deltaTime;
-        if (timeAlive < 0.0f)
+        if (timeAlive <= 0.0f)
         {
             Destroy(this.gameObject);
             
@@ -54,7 +54,7 @@ public class Projectile : MonoBehaviour
     {
         if (other.GetComponent<Stats>())
         {
-            other.GetComponent<Stats>().hurt(attackPower, staggerPower);
+            other.GetComponent<Stats>().addHealth(-attackPower);
         }
         if (other.gameObject.layer == 9 || other.gameObject.layer == 10)
         {

@@ -5,93 +5,72 @@ using UnityEngine.UI;
 
 public class Stats : MonoBehaviour
 {
-    public int max_health = 100;
-    int health = 100;
+    // References
     public Slider slider;
-    public GameObject damageText;
-    public GameObject coin;
-    private int staggerAmount = 0;
-    private int staggerThreshold = 10;
-    private bool dead = false;
+    public List<GameObject> Loot = new List<GameObject>();
 
-    private Rigidbody rigidbody;
+    public int maxHealth = 100;
+    private int currentHealth = 100;
+    private int lerpedHealth = 100;
 
-    private float hurtTimer = 1.0f;
-    
+    private int maxStagger = 100;
+    private int currentStagger = 0;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        health = max_health;
-        slider.value = health;
-        rigidbody = GetComponent<Rigidbody>();
+        currentHealth = maxHealth;
+        currentStagger = maxStagger;
     }
 
     // Update is called once per frame
     void Update()
     {
-        hurtTimer -= Time.deltaTime;
-        hurtTimer = Mathf.Clamp(hurtTimer, 0, 1.0f);
-    }
-
-    public void hurt(int amount, int stagger=0)
-    {
-        if (hurtTimer > 0)
+        lerpedHealth = (int)Mathf.Lerp(lerpedHealth, currentHealth, 2.5f * Time.deltaTime);
+        if (slider != null)
         {
-            return;
+            slider.value = (float)lerpedHealth / (float)maxHealth;
         }
+    }
 
-        health -= amount;
-        staggerAmount += stagger;
-        slider.value = (float)health / (float)max_health;
-        //GameObject gameTextInstance = Instantiate(damageText, this.transform.position + new Vector3(0.0f, 10.0f, 0.0f), Quaternion.identity);
-        if (health <= 0 && !dead)
+    public void addHealth(float health)
+    {
+        currentHealth = (int)Mathf.Clamp(currentHealth + health, 0, maxHealth);
+        if (health < 0)
         {
-            dead = true;
-            spawnCoins(5, transform.position);
-            Destroy(this.gameObject);
-        }
-        hurtTimer = 0.25f;
-    }
 
-    public void launch(Vector3 launchForce, int stagger)
-    {
-        staggerAmount += stagger;
-        if (staggerAmount <= 10)
-        { 
-            rigidbody.AddForce(launchForce, ForceMode.Impulse);
         }
     }
 
-    void spawnCoins(int amountOfCoins, Vector3 at_position)
+    public bool isDead()
     {
-        for (int i = 0; i < amountOfCoins; i++)
-        {
-            var random_force = new Vector3(Random.Range(-1.0f, 1.0f) * 10.0f, Random.Range(4.0f, 8.0f) * 10.0f, Random.Range(-1.0f, 1.0f) * 10.0f);
-            GameObject coinInstance = Instantiate(coin, this.transform.position, Quaternion.identity);
-            // Makes all the coins shoot upwards
-            coinInstance.GetComponent<Rigidbody>().AddForce(random_force, ForceMode.Impulse);
-            
-        }
-
+        return lerpedHealth <= 0.0;
     }
 
-    public int getStaggerAmount()
-    {
-        return staggerAmount;
-    }
 
-    public void setStaggerAmount(int amount)
+    public void addStagger(int amount)
     {
-        staggerAmount = amount;
-    }
-
-    public void addStaggerAmount(int amount)
-    {
-        staggerAmount += amount;
+        currentStagger += amount;
     }
 
     public bool isStaggered()
     {
-        return staggerAmount > staggerThreshold;
+        return currentStagger > maxStagger;
+    }
+
+    public void spawnRandomLoot(int amount, Vector3 atPosition)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            GameObject LootInstance = Instantiate(Loot[Random.Range(0, Loot.Count)], this.transform.position, Quaternion.identity);
+            // Makes the loot shoot upwards for some oomph.
+            if (LootInstance.GetComponent<Rigidbody>() != null)
+            {
+                var launchDirection = new Vector3(Random.Range(-1.0f, 1.0f) * 10.0f, Random.Range(4.0f, 8.0f) * 10.0f, Random.Range(-1.0f, 1.0f) * 10.0f);
+                LootInstance.GetComponent<Rigidbody>().AddForce(launchDirection, ForceMode.Impulse);
+            }
+        }
+
     }
 }
