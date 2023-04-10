@@ -10,32 +10,55 @@ public class Stats : MonoBehaviour
     public Slider slider;
     public GameObject damageText;
     public GameObject coin;
+    private int staggerAmount = 0;
+    private int staggerThreshold = 10;
     private bool dead = false;
+
+    private Rigidbody rigidbody;
+
+    private float hurtTimer = 1.0f;
+    
     // Start is called before the first frame update
     void Start()
     {
         health = max_health;
         slider.value = health;
+        rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        hurtTimer -= Time.deltaTime;
+        hurtTimer = Mathf.Clamp(hurtTimer, 0, 1.0f);
     }
 
-    public void hurt(int amount)
+    public void hurt(int amount, int stagger=0)
     {
-        health -= amount;
-        slider.value = (float)health / (float)max_health;
-        GameObject gameTextInstance = Instantiate(damageText, this.transform.position + new Vector3(0.0f, 10.0f, 0.0f), Quaternion.identity);
+        if (hurtTimer > 0)
+        {
+            return;
+        }
 
-        print(health);
+        health -= amount;
+        staggerAmount += stagger;
+        slider.value = (float)health / (float)max_health;
+        //GameObject gameTextInstance = Instantiate(damageText, this.transform.position + new Vector3(0.0f, 10.0f, 0.0f), Quaternion.identity);
         if (health <= 0 && !dead)
         {
             dead = true;
             spawnCoins(5, transform.position);
             Destroy(this.gameObject);
+        }
+        hurtTimer = 0.25f;
+    }
+
+    public void launch(Vector3 launchForce, int stagger)
+    {
+        staggerAmount += stagger;
+        if (staggerAmount <= 10)
+        { 
+            rigidbody.AddForce(launchForce, ForceMode.Impulse);
         }
     }
 
@@ -52,4 +75,23 @@ public class Stats : MonoBehaviour
 
     }
 
+    public int getStaggerAmount()
+    {
+        return staggerAmount;
+    }
+
+    public void setStaggerAmount(int amount)
+    {
+        staggerAmount = amount;
+    }
+
+    public void addStaggerAmount(int amount)
+    {
+        staggerAmount += amount;
+    }
+
+    public bool isStaggered()
+    {
+        return staggerAmount > staggerThreshold;
+    }
 }

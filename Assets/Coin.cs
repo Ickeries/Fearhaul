@@ -45,5 +45,6 @@ public class Coin : MonoBehaviour
     void FixedUpdate()
     {
         rigidbody.AddForce(new Vector3(0.0f, -32.0f, 0.0f), ForceMode.Acceleration);
+        
     }
 }

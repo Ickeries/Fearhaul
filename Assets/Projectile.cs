@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
 
     private Rigidbody rigidbody;
 
+    public int attackPower = 10;
     public float timeAlive = 0.5f;
     public float gravityMultiplier = 1.0f;
     public GameObject explosion_prefab;
@@ -53,7 +54,7 @@ public class Projectile : MonoBehaviour
         if (other.GetComponent<Stats>())
         {
             print(other);
-            other.GetComponent<Stats>().hurt(10);
+            other.GetComponent<Stats>().hurt(attackPower);
         }
         if (other.gameObject.layer == 9 || other.gameObject.layer == 10)
         {

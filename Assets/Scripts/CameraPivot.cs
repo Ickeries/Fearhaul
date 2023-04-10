@@ -16,7 +16,7 @@ public class CameraPivot : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+        transform.forward = Camera.main.transform.forward;
     }
 
  

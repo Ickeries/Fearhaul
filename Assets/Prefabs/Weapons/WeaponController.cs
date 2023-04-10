@@ -23,9 +23,9 @@ public class WeaponController : MonoBehaviour
     public float upwardForce = 20.0f;
 	private RaycastHit hit;
     public AnimationCurve curve;
-    private Vector3 targetPosition;
+    private Vector3 targetPoint;
     PlayerInput weaponInput;
-
+    public LayerMask collideWith;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,8 +39,23 @@ public class WeaponController : MonoBehaviour
     void Update()
     {
         //pivot.transform.eulerAngles = new Vector3(0.0f, Camera.main.transform.rotation.y, 0.0f);
-        targetPosition = Vector3.Lerp(targetPosition, Camera.main.transform.position + Camera.main.transform.forward * 75.0f, 10.0f * Time.deltaTime);
-        pivot.transform.LookAt(targetPosition);
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 150.0f, collideWith))
+        {
+            Ray ray2 = new Ray(pivot.transform.position, (hit.point - pivot.transform.position).normalized);
+            RaycastHit hit2;
+            if (Physics.Raycast(ray2, out hit2, 150.0f, collideWith))
+            {
+                targetPoint = Vector3.Lerp(targetPoint, hit2.point, 10.0f * Time.deltaTime);
+            }
+        }
+        else
+        {
+            targetPoint = Vector3.Lerp(targetPoint, ray.GetPoint(150.0f), 10.0f * Time.deltaTime);
+
+        }
+        pivot.transform.LookAt(targetPoint);
         if (weaponInput.actions["Fire"].ReadValue<float>() == 1)
         {
             if(currentWeapon != null)
@@ -132,19 +147,5 @@ public class WeaponController : MonoBehaviour
 		Physics.Raycast(ray, out hit);
 		return hit;
 	}
-	
-    void OnTriggerEnter(Collider collider)
-    {
-        var targetable = collider.gameObject.GetComponent<Targetable>();
-        if (targetable)
-        {
-            targets.Add(collider.gameObject);
-        }
-    }
-
-    void OnTriggerExit(Collider collider)
-    {
-        targets.Remove(collider.gameObject);
-    }
 
 }

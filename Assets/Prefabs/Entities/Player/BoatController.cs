@@ -3,19 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+
 public class BoatController : MonoBehaviour
 {
     private Buoyancy buoyancy;
     private Rigidbody rigidbody;
-
+    private CharacterController cc;
     // Publics
-    public float boat_speed = 10.0f;
+    private float boatSpeed = 10.0f;
     public float boat_rotation_speed = 1.0f;
     public float jump_strength = 10.0f;
-    public float jump_height = 10.0f;
-    public float jump_time_to_peak = 1.0f;
-    public float jump_time_to_descent = 1.0f;
-
     public TMP_Text currentStateText;
 
     private float jump_velocity = 0.0f;
@@ -23,9 +20,12 @@ public class BoatController : MonoBehaviour
     private float fall_gravity = 0.0f;
     private Vector3 movement;
 
+    List<GameObject> allCollisions = new List<GameObject>();
 
     enum STATES { Idle, Moving, Charge, Aim}
     private STATES state = STATES.Idle;
+
+    private Quaternion toRotation;
 
     //Input
     PlayerInput playerInput;
@@ -37,9 +37,7 @@ public class BoatController : MonoBehaviour
         Physics.IgnoreLayerCollision(8, 11);
         playerInput = this.GetComponent<PlayerInput>();
         JumpActions = playerInput.actions["Jump"];
-        buoyancy = GetComponent<Buoyancy>();
-        rigidbody = GetComponent<Rigidbody>();
-        update_jump_velocity();
+        cc = GetComponent<CharacterController>();
     }
 
     void OnMove(InputValue movementValue)
@@ -50,52 +48,56 @@ public class BoatController : MonoBehaviour
 
     void OnHop()
     {
-		if(buoyancy.is_underwater() == true)
-		{
-			rigidbody.AddForce(new Vector3(0.0f, jump_strength, 0.0f), ForceMode.Impulse);
-		}
+    }
+
+    void Update()
+    {
+        allCollisions.RemoveAll(s => s == null);
+        foreach(GameObject collision in allCollisions)
+        {
+            if (!collision.GetComponent<Stats>().isStaggered())
+            {
+                Vector3 launchForce = new Vector3(Random.Range(-1.0f, 1.0f) * 2.0f, 8.0f, Random.Range(-1.0f, 1.0f) * 2.0f);
+                collision.GetComponent<Stats>().launch(launchForce, 10);
+                collision.GetComponent<Stats>().hurt(10);
+            } 
+        }
+        
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        Vector3 moveDirection = get_movement_vector();
+        if (movement.sqrMagnitude != 0.0f)
+        {
+            toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+        }
+
         // Calculates input direction with respect to camera direction to create a final input
-        Vector3 movement_vector = get_movement_vector();
-        currentStateText.text = System.Enum.GetName(typeof(STATES), state);
         switch (state)
         { 
         case STATES.Idle:
-                if (playerInput.actions["Jump"].WasPressedThisFrame())
-                {
-                    rigidbody.AddForce(new Vector3(0.0f, jump_strength, 0.0f), ForceMode.Impulse);
-                }
-                else if (movement_vector.sqrMagnitude > 0.0f)
+                if (movement.sqrMagnitude > 0.0f)
                 {
                     enter_state(STATES.Moving);
                 }
+                boatSpeed = Mathf.Lerp(boatSpeed, 0.0f, 1.0f * Time.deltaTime);
                 break;
         case STATES.Moving:
-                if (playerInput.actions["Jump"].WasPressedThisFrame())
+                if (playerInput.actions["Charge"].IsPressed())
                 {
-                    rigidbody.AddForce(new Vector3(0.0f, jump_strength, 0.0f), ForceMode.Impulse);
+                    enter_state(STATES.Charge);
                 }
-                else if (movement_vector.sqrMagnitude == 0.0f)
+                else if (movement.sqrMagnitude == 0.0f)
                 {
                     enter_state(STATES.Idle);
                 }
-                else if (playerInput.actions["Charge"].IsPressed())
-                {
-                    enter_state(STATES.Charge);    
-                }
-                else
-                {
-                    // Move boat in direction of movement vector
-                    rotateRigidBodyToVector(movement_vector, 1.0f);
-                    rigidbody.AddForce(transform.forward * boat_speed, ForceMode.Force);
-                }
+                boatSpeed = Mathf.Lerp(boatSpeed, 30.0f, 1.0f * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 50.0f * Time.deltaTime);
                 break;
         case STATES.Charge:
-                if (movement_vector.sqrMagnitude == 0.0f)
+                if (movement.sqrMagnitude == 0.0f)
                 {
                     enter_state(STATES.Idle);
                 }
@@ -103,40 +105,27 @@ public class BoatController : MonoBehaviour
                 {
                     enter_state(STATES.Moving);
                 }
-                rotateRigidBodyToVector(movement_vector, 0.2f);
-                rigidbody.AddForce(transform.forward * boat_speed * 1.25f, ForceMode.Force);
+                boatSpeed = Mathf.Lerp(boatSpeed, 50.0f, 2.0f * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 1.0f * Time.deltaTime);
                 break;
         }
-        rigidbody.AddForce(Physics.gravity * 4.0f, ForceMode.Acceleration);
-        if (rigidbody.velocity.magnitude > 100.0f)
+
+        cc.Move(transform.forward * boatSpeed * Time.deltaTime);
+        transform.position = new Vector3(transform.position.x, 0.0f, transform.position.z);
+        if (movement.sqrMagnitude != 0.0f)
         {
-            rigidbody.velocity = rigidbody.velocity.normalized * 100.0f;
+            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 100.0f * Time.deltaTime);
         }
     }
 
-    void update_jump_velocity()
-    {
-        jump_velocity = (2.0f * jump_height) / jump_time_to_peak;
-        jump_gravity = (-2.0f * jump_height) / (jump_time_to_peak * jump_time_to_peak);
-        fall_gravity = (-2.0f * jump_height) / (jump_time_to_descent * jump_time_to_peak);
-    }
 
     private Vector3 get_movement_vector()
     {
         Vector3 forward = Camera.main.transform.forward;
         Vector3 right = Camera.main.transform.right;
-        Vector3 forward_input = forward * movement.z;
-        Vector3 right_input = right * movement.x;
-        return forward_input + right_input;
-    }
-
-    private void rotateRigidBodyToVector(Vector3 vector,float multiplier)
-    {
-        if (vector == Vector3.zero) return;
-        Vector3 force_vector = new Vector3(vector.x, 0.0f, vector.z);
-        Quaternion targetRotation = Quaternion.LookRotation(force_vector);
-        Quaternion lerpedRotation = Quaternion.Slerp(rigidbody.rotation, targetRotation, boat_rotation_speed * multiplier);
-        rigidbody.MoveRotation(lerpedRotation);
+        Vector3 input = forward * movement.z + right * movement.x;
+        return new Vector3(input.x, 0.0f, input.z);
     }
 
     private void enter_state(STATES state)
@@ -153,10 +142,8 @@ public class BoatController : MonoBehaviour
         case STATES.Moving:
             break;
         case STATES.Charge:
-                print("LEL");
-                // Makes the boat tip up slightly when charging
-                rigidbody.AddForceAtPosition(new Vector3(0.0f, 5.0f, 0.0f), transform.position + transform.forward * 1.0f, ForceMode.Impulse);
-                Camera.main.GetComponent<PlayerCamera>().set_to_fov(70.0f);
+            // Makes the boat tip up slightly when charging
+            Camera.main.GetComponent<PlayerCamera>().set_to_fov(70.0f);
             break;
         }
         state = new_state;
@@ -176,5 +163,23 @@ public class BoatController : MonoBehaviour
                 break;
         }
     }
+
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+            {
+                allCollisions.Add(collision.gameObject);
+            }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if(allCollisions.Contains(collision.gameObject))
+        { 
+            allCollisions.Remove(collision.gameObject);
+        }
+    }
+
 
 }
