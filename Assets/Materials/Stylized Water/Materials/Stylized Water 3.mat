@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Stylized Water 3
   m_Shader: {fileID: 4800000, guid: c8110ef7c96474f73b2ee5f90e026b10, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords:
   - FANCY_SHADOWS
@@ -19,6 +21,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -40,8 +43,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DepthDensity: 0.037
-    - _DistanceDensity: 0.02
+    - _DepthDensity: 0.05
+    - _DistanceDensity: 0.014
     - _EdgeFoamDepth: 0.1
     - _FancyShadows: 0
     - _FoamContribution: 0.471
@@ -57,11 +60,11 @@ Material:
     - _SparkleSpeed: 0.01
     - _SunSpecularExponent: 1
     - _VertexNormalDelta: 0.01
-    - _Wave1Amplitude: 0.1
+    - _Wave1Amplitude: 1
     - _Wave1Direction: 0.382
     - _Wave1Speed: 0.25
     - _Wave1Wavelength: 2
-    - _Wave2Amplitude: 0.15
+    - _Wave2Amplitude: 0.5
     - _Wave2Direction: 0.618
     - _Wave2Speed: 1
     - _Wave2Wavelength: 7.5

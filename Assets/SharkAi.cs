@@ -42,7 +42,6 @@ public class SharkAi : MonoBehaviour
             staggerTimer = 1.0f;
             stats.setStaggerAmount(0);
             animator.Play("hurt", 0, 0.0f);
-            rigidbody.detectCollisions = false;
         }
     }
 
@@ -86,7 +85,6 @@ public class SharkAi : MonoBehaviour
                 if (staggerTimer < 0.0f && buoyancy.is_underwater() == true)
                 {
                     state = STATES.Alert;
-                    rigidbody.detectCollisions = true;
                 }
                 break;
         }
