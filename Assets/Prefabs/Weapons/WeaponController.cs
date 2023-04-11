@@ -36,7 +36,7 @@ public class WeaponController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //pivot.transform.eulerAngles = new Vector3(0.0f, Camera.main.transform.rotation.y, 0.0f);
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));

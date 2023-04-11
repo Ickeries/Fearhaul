@@ -17,7 +17,7 @@ public class BoatController : MonoBehaviour
 
     private Vector3 force;
     private Vector3 gravity;
-    private Vector3 movement;
+    private Vector2 movement;
 
     List<GameObject> allCollisions = new List<GameObject>();
 
@@ -28,6 +28,7 @@ public class BoatController : MonoBehaviour
 
     //Input
     PlayerInput boatInput;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -38,8 +39,7 @@ public class BoatController : MonoBehaviour
 
     void OnMove(InputValue movementValue)
     {
-        movement.x = movementValue.Get<Vector2>().x;
-        movement.z = movementValue.Get<Vector2>().y;
+        movement = movementValue.Get<Vector2>();
     }
 
     void OnHop()
@@ -65,10 +65,9 @@ public class BoatController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 moveDirection = get_movement_vector();
-        if (movement.sqrMagnitude != 0.0f)
+        if (movement.x != 0.0f)
         {
-            toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+            rigidbody.AddTorque(new Vector3(0.0f, movement.x * 50.0f, 0.0f));
         }
 
         // Calculates input direction with respect to camera direction to create a final input
@@ -76,7 +75,7 @@ public class BoatController : MonoBehaviour
         { 
         case STATES.Idle:
                     //gravity += new Vector3(0.0f, 200.0f, 0.0f);
-                if (movement.sqrMagnitude > 0.0f)
+                if (movement.y > 0.0f)
                 {
                     enter_state(STATES.Moving);
                 }
@@ -92,7 +91,7 @@ public class BoatController : MonoBehaviour
                 {
                     enter_state(STATES.Idle);
                 }
-                force = transform.forward * boatSpeed;
+                force = transform.forward * movement.y * boatSpeed;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, boatRotationSpeed * Time.deltaTime);
                 break;
         case STATES.Charge:
@@ -114,13 +113,6 @@ public class BoatController : MonoBehaviour
     }
 
 
-    private Vector3 get_movement_vector()
-    {
-        Vector3 forward = Camera.main.transform.forward;
-        Vector3 right = Camera.main.transform.right;
-        Vector3 input = forward * movement.z + right * movement.x;
-        return new Vector3(input.x, 0.0f, input.z);
-    }
 
     private void enter_state(STATES state)
     {
