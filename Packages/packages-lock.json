@@ -7,15 +7,6 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.siccity.gltfutility": {
-      "version": "https://github.com/siccity/gltfutility.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.nuget.newtonsoft-json": "2.0.0"
-      },
-      "hash": "96619fcd48ffe5c4ad122837a21601a6f7c20080"
-    },
     "com.unity.2d.pixel-perfect": {
       "version": "5.0.3",
       "depth": 0,
@@ -118,13 +109,6 @@
       "dependencies": {
         "com.unity.modules.uielements": "1.0.0"
       },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.nuget.newtonsoft-json": {
-      "version": "3.1.0",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.performance.profile-analyzer": {

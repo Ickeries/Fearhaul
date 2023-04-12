@@ -7,6 +7,13 @@ public class Weapon : MonoBehaviour
 
     public Transform spawnProjectileTransform;
     public GameObject projectile;
+    public Transform pivotY;
+    public Transform pivotX;
+
+
+
+
+
     public float spread = 5.0f;
     public float timeBetweenShots = 0.5f;
     public float fireSpeed = 100.0f;
@@ -14,6 +21,8 @@ public class Weapon : MonoBehaviour
     public float reloadTime = 3.0f;
     private int currentAmmo = 10;
     private float shootTimer = 0.0f;
+
+    private Vector3 lookAtPosition = new Vector3(0f, 0f, 0f);
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +37,13 @@ public class Weapon : MonoBehaviour
             shootTimer= 0.0f;
         }
     }
+    public void Look(Vector3 atPosition)
+    {
+       lookAtPosition = Vector3.Lerp(lookAtPosition, atPosition, 2.5f * Time.deltaTime);
+       pivotY.LookAt(lookAtPosition);
+       //pivotX.rotation = Quaternion.Lerp(pivotX.rotation, toRotationX, 1.0f * Time.deltaTime);
+    }
+
     public void Shoot()
     {
         // 
@@ -40,7 +56,7 @@ public class Weapon : MonoBehaviour
             shootTimer = timeBetweenShots;
             float x = Random.Range(-spread, spread);
             float y = Random.Range(-spread, spread);
-            Vector3 directionWithSpread = (this.transform.forward * fireSpeed) + new Vector3(x, y, 0.0f);
+            Vector3 directionWithSpread = (pivotX.forward * fireSpeed) + new Vector3(x, y, 0.0f);
             GameObject new_projectile = Instantiate(projectile, spawnProjectileTransform.position, Quaternion.identity);
             new_projectile.GetComponent<Rigidbody>().AddForce(directionWithSpread, ForceMode.Impulse);
             currentAmmo--;
