@@ -7,6 +7,13 @@ public class Weapon : MonoBehaviour
 
     public Transform spawnProjectileTransform;
     public GameObject projectile;
+    public Transform pivotY;
+    public Transform pivotX;
+
+
+
+
+
     public float spread = 5.0f;
     public float timeBetweenShots = 0.5f;
     public float fireSpeed = 100.0f;
@@ -28,6 +35,13 @@ public class Weapon : MonoBehaviour
             shootTimer= 0.0f;
         }
     }
+
+    void FixedUpdate()
+    {
+        pivotY.transform.eulerAngles = new Vector3(0.0f, Camera.main.transform.eulerAngles.y, 0.0f);
+        pivotX.transform.rotation = Camera.main.transform.rotation;
+    }
+
     public void Shoot()
     {
         // 
