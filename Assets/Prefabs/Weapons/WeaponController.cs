@@ -75,8 +75,8 @@ public class WeaponController : MonoBehaviour
 
     public void dropWeapon(GameObject weapon)
     {
-        GameObject weaponPickupPrefab = Instantiate(weaponPickupPrefab, this.transform.position, Quaternion.identity);
-        weaponPickupPrefab.weapon = PrefabUtility.GetPrefabInstanceHandle(weapon);
+        GameObject weaponPickupInstance = Instantiate(weaponPickupPrefab, this.transform.position, Quaternion.identity);
+        //weaponPickupInstance.GetComponent<WeaponPickup>().weapon = PrefabUtility.GetPrefabInstanceHandle(weapon);
         Destroy(weapon);
         currentWeapon = null;
     }
