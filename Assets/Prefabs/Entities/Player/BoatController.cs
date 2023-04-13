@@ -79,15 +79,11 @@ public class BoatController : MonoBehaviour
         { 
         case STATES.Idle:
                     //gravity += new Vector3(0.0f, 200.0f, 0.0f);
-                if (input_charging > 0.0f)
-                {
-                    enter_state(STATES.Charge);
-                }
-                else if (movement.y > 0.0f)
+                if (movement.y > 0.0f)
                 {
                     enter_state(STATES.Moving);
                 }
-                force = Vector3.Lerp(force, new Vector3(0.0f, 0.0f, 0.0f), 0.01f * Time.deltaTime);
+                force = Vector3.Lerp(force, new Vector3(0.0f, 0.0f, 0.0f), 1.0f * Time.deltaTime);
                 break;
         case STATES.Moving:
                 //gravity += new Vector3(0.0f, 200.0f, 0.0f);
@@ -104,6 +100,10 @@ public class BoatController : MonoBehaviour
                 break;
         case STATES.Charge:
                 if (input_charging == 0.0f)
+                {
+                    enter_state(STATES.Idle);
+                }
+                else if (movement.sqrMagnitude == 0.0f)
                 {
                     enter_state(STATES.Idle);
                 }

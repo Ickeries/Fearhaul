@@ -886,7 +886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boatSpeed: 100
   boatChargeSpeed: 150
-  boatRotationSpeed: 100
+  boatRotationSpeed: 150
   jumpStrength: 10
   currentStateText: {fileID: 8890958717336732540}
   input_charging: 0

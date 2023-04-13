@@ -54,11 +54,12 @@ public class Weapon : MonoBehaviour
         if (currentAmmo > 0)
         {
             shootTimer = timeBetweenShots;
-            float x = Random.Range(-spread, spread);
-            float y = Random.Range(-spread, spread);
-            Vector3 directionWithSpread = (pivotX.forward * fireSpeed) + new Vector3(x, y, 0.0f);
-            GameObject new_projectile = Instantiate(projectile, spawnProjectileTransform.position, Quaternion.identity);
-            new_projectile.GetComponent<Rigidbody>().AddForce(directionWithSpread, ForceMode.Impulse);
+            float xSpread = Random.Range(-1.0f, 1.0f);
+            float ySpread = Random.Range(-1.0f, 1.0f);
+            Vector3 spreadVector = new Vector3(xSpread, ySpread, 0.0f).normalized * spread;
+            Quaternion rotation = Quaternion.Euler(spreadVector) * pivotX.rotation;
+            GameObject new_projectile = Instantiate(projectile, spawnProjectileTransform.position, rotation);
+            new_projectile.GetComponent<Rigidbody>().AddForce(new_projectile.transform.forward * fireSpeed, ForceMode.Impulse);
             currentAmmo--;
         }
         else

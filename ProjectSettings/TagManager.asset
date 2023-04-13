@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - ActiveEnemies
   - Magnet
+  - WeaponPickup
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Terrain
   - Projectile
   - PostProcessing
-  - 
+  - Focusable
   - 
   - 
   - 

@@ -11,11 +11,11 @@ public class WeaponController : MonoBehaviour
     public Transform projectileSpawnTransform;
     public GameObject currentWeapon;
     public GameObject[] weaponList;
+    public GameObject weaponPickupPrefab;
+
     public float maxAimAngle = 45.0f;
     public GameObject projectile_prefab;
     List<GameObject> targets = new List<GameObject>();
-    List<TargetData> validTargets = new List<TargetData>();
-
     public float timeBetweenShooting, spread, reloadTime;
     public int allowButtonHold;
     public bool shooting, readyToShoot, reloading;
@@ -25,6 +25,10 @@ public class WeaponController : MonoBehaviour
     public AnimationCurve curve;
     private Vector3 targetPoint;
     public LayerMask collideWith;
+
+    [HideInInspector]
+    public bool input_firing = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,15 +50,35 @@ public class WeaponController : MonoBehaviour
             }
 
             currentWeapon.GetComponent<Weapon>().Look(targetPoint);
+            
+            if (input_firing)
+            {
+                currentWeapon.GetComponent<Weapon>().Shoot();
+            }
         }
     }
 
 
-    public void OnFire()
+    public void pickupWeapon(GameObject weapon)
     {
-        if (currentWeapon != null)
+        if (weapon.GetComponent<Weapon>() != null)
         {
-            currentWeapon.GetComponent<Weapon>().Shoot();
+            GameObject weapon_instantiated = Instantiate(weapon, this.transform.position, Quaternion.identity);
+            weapon_instantiated.transform.parent = this.transform;
+            if (currentWeapon != null)
+            {
+                dropWeapon(currentWeapon);
+            }
+            currentWeapon = weapon_instantiated;
         }
     }
+
+    public void dropWeapon(GameObject weapon)
+    {
+        GameObject weaponPickupPrefab = Instantiate(weaponPickupPrefab, this.transform.position, Quaternion.identity);
+        weaponPickupPrefab.weapon = PrefabUtility.GetPrefabInstanceHandle(weapon);
+        Destroy(weapon);
+        currentWeapon = null;
+    }
+
 }
