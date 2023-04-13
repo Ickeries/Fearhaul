@@ -11,6 +11,9 @@ public class PlayerCamera : MonoBehaviour
     float rotationY = 0.0f;
     public float rotationSpeed = 25.0f;
 
+    public Transform pivot;
+    public Transform follow;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,12 +27,27 @@ public class PlayerCamera : MonoBehaviour
         this.GetComponent<Camera>().fieldOfView = Mathf.Lerp(this.GetComponent<Camera>().fieldOfView, to_fov, 5.0f * Time.deltaTime);
     }
 
-    void OnLook(InputValue movementValue)
+    void FixedUpdate()
     {
-        rotationX -= movementValue.Get<Vector2>().y * rotationSpeed * Time.deltaTime;
+        if (follow != null)
+        {
+            pivot.position = follow.position;
+        }
+        pivot.localRotation = Quaternion.Euler(rotationX, rotationY, 0.0f);
+    }
+
+    public void addZoom(float value)
+    {
+        Vector3 p = this.transform.localPosition;
+        this.transform.localPosition = new Vector3(p.x, p.y, p.z + value);
+    }
+
+
+    public void OnLook(InputValue movementValue)
+    {
+        rotationX += movementValue.Get<Vector2>().y * rotationSpeed * Time.deltaTime;
         rotationY += movementValue.Get<Vector2>().x * rotationSpeed * Time.deltaTime;
-        rotationX = Mathf.Clamp(rotationX, -15.0f, 80.0f);
-        transform.localRotation = Quaternion.Euler(rotationX, rotationY, 0.0f);
+        rotationX = Mathf.Clamp(rotationX, -30.0f, 60.0f);
     }
 
 

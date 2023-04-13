@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Weapons/Models/chainsaw.obj.meta
 guid: e90aa1bdd562f6340b231ba98a762b6e
+========
+guid: aa93f22550ee8dc4b887492f772b4b25
+>>>>>>>> fc89c3f33a16347f2a1425169225045f863256bf:Assets/Prefabs/Weapons/cannon.fbx.meta
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []

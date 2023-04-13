@@ -19,6 +19,9 @@ public class BoatController : MonoBehaviour
     private Vector3 gravity;
     private Vector2 movement;
 
+    [HideInInspector]
+    public float input_charging = 0.0f;
+
     List<GameObject> allCollisions = new List<GameObject>();
 
     enum STATES { Idle, Moving, Charge, Aim}
@@ -26,25 +29,26 @@ public class BoatController : MonoBehaviour
 
     private Quaternion toRotation;
 
-    //Input
-    PlayerInput boatInput;
-    
+
     // Start is called before the first frame update
     void Start()
     {
+        buoyancy = GetComponent<Buoyancy>();
         Physics.IgnoreLayerCollision(8, 11);
-        boatInput = this.GetComponent<PlayerInput>();
         rigidbody = GetComponent<Rigidbody>();
     }
 
-    void OnMove(InputValue movementValue)
+    public void Jump()
     {
-        movement = movementValue.Get<Vector2>();
+        if (buoyancy.is_underwater())
+        {
+            rigidbody.AddForce(new Vector3(0.0f, jumpStrength, 0.0f), ForceMode.Impulse);
+        }
     }
 
-    void OnHop()
+    public void OnMove(InputValue movementValue)
     {
-        gravity = new Vector3(0.0f, jumpStrength, 0.0f);
+        movement = movementValue.Get<Vector2>();
     }
 
     void Update()
@@ -74,15 +78,19 @@ public class BoatController : MonoBehaviour
         { 
         case STATES.Idle:
                     //gravity += new Vector3(0.0f, 200.0f, 0.0f);
-                if (movement.y > 0.0f)
+                if (input_charging > 0.0f)
+                {
+                    enter_state(STATES.Charge);
+                }
+                else if (movement.y > 0.0f)
                 {
                     enter_state(STATES.Moving);
                 }
-                force = Vector3.Lerp(force, new Vector3(0.0f, 0.0f, 0.0f), 1.0f * Time.deltaTime);
+                force = Vector3.Lerp(force, new Vector3(0.0f, 0.0f, 0.0f), 0.01f * Time.deltaTime);
                 break;
         case STATES.Moving:
                 //gravity += new Vector3(0.0f, 200.0f, 0.0f);
-                if (boatInput.actions["Charge"].IsPressed())
+                if (input_charging > 0.0f)
                 {
                     enter_state(STATES.Charge);
                 }
@@ -94,20 +102,19 @@ public class BoatController : MonoBehaviour
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, boatRotationSpeed * Time.deltaTime);
                 break;
         case STATES.Charge:
-                if (movement.sqrMagnitude == 0.0f)
+                if (input_charging == 0.0f)
                 {
                     enter_state(STATES.Idle);
-                }
-                else if (!boatInput.actions["Charge"].IsPressed())
-                {
-                    enter_state(STATES.Moving);
                 }
                 force = transform.forward * boatChargeSpeed;
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, boatRotationSpeed * Time.deltaTime);
                 break;
         }
         gravity += new Vector3(0.0f, -16.0f * Time.deltaTime, 0.0f);
-        rigidbody.AddForce(force, ForceMode.Force);
+        if (buoyancy.is_underwater())
+        {
+            rigidbody.AddForce(force, ForceMode.Force);
+        }
         rigidbody.AddForce(new Vector3(0.0f, -16.0f, 0.0f), ForceMode.Acceleration);
     }
 

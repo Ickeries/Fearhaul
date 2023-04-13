@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5492357513880013491}
   - component: {fileID: 6053034862699400011}
   - component: {fileID: 3369389004659224459}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5078593077707868653}
   - component: {fileID: 7952036252439394284}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4944745240876978719}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Floater (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -368,7 +368,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3050268760482529820}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Floater (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +399,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7455689614984367784}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Floater (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,7 +430,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5472650754261644976}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Floaters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,7 +465,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5861518854498611241}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Floater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 1429336337072866884}
   - component: {fileID: 4831210350034543681}
   - component: {fileID: 5354083381517206425}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -666,7 +666,7 @@ GameObject:
   - component: {fileID: 7494007395561513565}
   - component: {fileID: 3280526709189058458}
   - component: {fileID: 5876529611486194221}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -740,7 +740,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7067737287204512739}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -777,7 +777,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5962754396682952304}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}

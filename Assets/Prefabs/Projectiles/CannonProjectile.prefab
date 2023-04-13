@@ -129,7 +129,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -149,5 +149,5 @@ MonoBehaviour:
   attackPower: 80
   staggerPower: 10
   timeAlive: 5
-  gravityMultiplier: 3
+  gravityMultiplier: 0
   explosion_prefab: {fileID: 4740719344561975414, guid: 683fb2d24f381874eb1f1de67bd321ea, type: 3}
