@@ -16,6 +16,8 @@ public class Stats : MonoBehaviour
     private int maxStagger = 100;
     private int currentStagger = 0;
 
+    public int lootAmount = 0;
+    public bool destroyWhenDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,11 @@ public class Stats : MonoBehaviour
     void Update()
     {
         lerpedHealth = (int)Mathf.Lerp(lerpedHealth, currentHealth, 2.5f * Time.deltaTime);
+        if (isDead() && destroyWhenDead)
+        {
+            spawnRandomLoot(lootAmount, this.transform.position);
+            Destroy(this.gameObject);
+        }
         if (slider != null)
         {
             slider.value = (float)lerpedHealth / (float)maxHealth;
