@@ -16,7 +16,8 @@ public class Stats : MonoBehaviour
     private int maxStagger = 100;
     private int currentStagger = 0;
 
-
+    private Vector3 launchPower = new Vector3(0.0f, 0.0f, 0.0f);
+    private float launchTimer = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,11 +28,18 @@ public class Stats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        lerpedHealth = (int)Mathf.Lerp(lerpedHealth, currentHealth, 2.5f * Time.deltaTime);
+        lerpedHealth = (int)Mathf.Lerp(lerpedHealth, currentHealth, 10.0f * Time.deltaTime);
         if (slider != null)
         {
             slider.value = (float)lerpedHealth / (float)maxHealth;
         }
+        launchTimer = Mathf.Clamp(launchTimer - Time.deltaTime, 0.0f, 1.0f);
+        if (launchTimer == 0.0f)
+        {
+            launchPower = new Vector3(0f, 0f, 0f);
+        }
+
+
     }
 
     public void addHealth(float health)
@@ -58,6 +66,13 @@ public class Stats : MonoBehaviour
     {
         return currentStagger > maxStagger;
     }
+
+    public void launch(Vector3 power)
+    {
+        launchPower = power;
+        launchTimer = 0.5f;
+    }
+
 
     public void spawnRandomLoot(int amount, Vector3 atPosition)
     {

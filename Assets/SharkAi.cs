@@ -64,14 +64,22 @@ public class SharkAi : MonoBehaviour
                     }
                 }
 
-
-                if (target != null)
+                if (stats.launchPower.sqrMagnitude != 0.0f)
+                {
+                    enter_state(STATES.Staggered);
+                }
+                else if (target != null)
                 {
                     state = STATES.Alert;
                 }
                 break;
             case STATES.Alert:
-                if (target != null)
+
+                if (stats.launchPower.sqrMagnitude != 0.0f)
+                { 
+                    enter_state(STATES.Staggered);
+                }
+                else if (target != null)
                 {
                     direction = (target.transform.position - this.transform.position).normalized;
                     if (buoyancy.is_underwater())
