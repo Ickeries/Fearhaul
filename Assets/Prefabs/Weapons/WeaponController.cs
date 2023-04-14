@@ -59,25 +59,37 @@ public class WeaponController : MonoBehaviour
     }
 
 
-    public void pickupWeapon(GameObject weapon)
+    public void pickupWeapon(WeaponPickup weaponPickup)
     {
-        if (weapon.GetComponent<Weapon>() != null)
+        if (currentWeapon != null)
         {
-            GameObject weapon_instantiated = Instantiate(weapon, this.transform.position, Quaternion.identity);
-            weapon_instantiated.transform.parent = this.transform;
-            if (currentWeapon != null)
-            {
-                dropWeapon(currentWeapon);
-            }
-            currentWeapon = weapon_instantiated;
+            dropWeapon(currentWeapon);
         }
+        if (weaponPickup.existing_weapon != null)
+        {
+            weaponPickup.existing_weapon.transform.SetParent(this.transform);
+            weaponPickup.existing_weapon.transform.localPosition = new Vector3(0f, 0f, 0f);
+            currentWeapon = weaponPickup.existing_weapon;
+            weaponPickup.existing_weapon.SetActive(true);
+        }
+        else
+        {
+            GameObject weaponInstantiated = Instantiate(weaponPickup.weapon, this.transform.position, Quaternion.identity);
+            weaponInstantiated.transform.parent = this.transform;
+            
+            currentWeapon = weaponInstantiated;
+        }
+        Destroy(weaponPickup.gameObject);
     }
 
     public void dropWeapon(GameObject weapon)
     {
+
         GameObject weaponPickupInstance = Instantiate(weaponPickupPrefab, this.transform.position, Quaternion.identity);
-        //weaponPickupInstance.GetComponent<WeaponPickup>().weapon = PrefabUtility.GetPrefabInstanceHandle(weapon);
-        Destroy(weapon);
+        weaponPickupInstance.GetComponent<WeaponPickup>().existing_weapon = weapon;
+        weaponPickupInstance.GetComponent<Rigidbody>().AddForce(new Vector3(0f, 15.0f, 0f), ForceMode.Impulse);
+        weapon.transform.SetParent(weaponPickupInstance.transform);
+        weapon.SetActive(false);
         currentWeapon = null;
     }
 

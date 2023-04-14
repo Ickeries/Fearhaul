@@ -65,9 +65,7 @@ public class Inputs : MonoBehaviour
     {
         if (focused_object != null && focused_object.tag == "WeaponPickup")
         {
-            GameObject weapon = focused_object.GetComponent<WeaponPickup>().getWeapon();
-            weapons.pickupWeapon(weapon);
-            Destroy(focused_object.gameObject);
+            weapons.pickupWeapon(focused_object.GetComponent<WeaponPickup>());
         }
     }
 

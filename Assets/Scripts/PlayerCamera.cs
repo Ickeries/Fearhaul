@@ -47,7 +47,7 @@ public class PlayerCamera : MonoBehaviour
     {
         rotationX += movementValue.Get<Vector2>().y * rotationSpeed * Time.deltaTime;
         rotationY += movementValue.Get<Vector2>().x * rotationSpeed * Time.deltaTime;
-        rotationX = Mathf.Clamp(rotationX, -30.0f, 60.0f);
+        rotationX = Mathf.Clamp(rotationX, -45.0f, 25.0f);
     }
 
 

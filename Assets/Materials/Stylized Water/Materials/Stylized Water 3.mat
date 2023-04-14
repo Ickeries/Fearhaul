@@ -60,7 +60,7 @@ Material:
     - _SparkleSpeed: 0.01
     - _SunSpecularExponent: 1
     - _VertexNormalDelta: 0.01
-    - _Wave1Amplitude: 1
+    - _Wave1Amplitude: 0.5
     - _Wave1Direction: 0.382
     - _Wave1Speed: 0.25
     - _Wave1Wavelength: 2
@@ -75,7 +75,7 @@ Material:
     - _Color: {r: 0.3066038, g: 0.5199629, b: 1, a: 1}
     - _DeepColor: {r: 0.20392156, g: 1, b: 0.6917215, a: 1}
     - _EdgeFoamColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FarColor: {r: 0.121033944, g: 0.08235295, b: 0.7058824, a: 1}
+    - _FarColor: {r: 0.05918477, g: 0.13207549, b: 0.08609079, a: 1}
     - _SSSColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShadowColor: {r: 0.03551086, g: 0.30351532, b: 0.3584906, a: 1}
     - _ShallowColor: {r: 0.89161694, g: 1.299991, b: 1.1885401, a: 1}
