@@ -32,7 +32,7 @@ Transform:
   - {fileID: 5864159791573830425}
   - {fileID: 3492564203031722603}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6813910615030257648
 MonoBehaviour:
@@ -47,11 +47,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnProjectileTransform: {fileID: 6040744749136719264}
-  projectile: {fileID: 2690096911647796819, guid: d4f01186579dc9a47be61d7c5ae9a4b2, type: 3}
+  projectile: {fileID: 2690096911647796819, guid: 81a63f9fda881644e9dfc1b5e9280f9d, type: 3}
   pivotY: {fileID: 2599267205408065465}
   pivotX: {fileID: 3492564203031722603}
-  spread: 1
-  timeBetweenShots: 0.2
+  spread: 2
+  timeBetweenShots: 0.25
   fireSpeed: 500
   clipSize: 10
   reloadTime: 3
@@ -195,7 +195,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5046039274888209378}
   m_LocalRotation: {x: 0.000031339812, y: -0.99980384, z: 0.019740967, w: -0.001587238}
-  m_LocalPosition: {x: -0.022, y: 0.09, z: 1.34}
+  m_LocalPosition: {x: -0.022, y: 0.043, z: 0.736}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

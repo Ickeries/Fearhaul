@@ -39,7 +39,7 @@ public class Weapon : MonoBehaviour
     }
     public void Look(Vector3 atPosition)
     {
-       lookAtPosition = Vector3.Lerp(lookAtPosition, atPosition, 2.5f * Time.deltaTime);
+       lookAtPosition = Vector3.Lerp(lookAtPosition, atPosition, 5.0f * Time.deltaTime);
        pivotY.LookAt(lookAtPosition);
        //pivotX.rotation = Quaternion.Lerp(pivotX.rotation, toRotationX, 1.0f * Time.deltaTime);
     }

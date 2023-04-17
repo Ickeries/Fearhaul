@@ -76,7 +76,7 @@ public class SharkAi : MonoBehaviour
                     direction = (target.transform.position - this.transform.position).normalized;
                     if (buoyancy.is_underwater())
                     {
-                        rigidbody.AddForce(direction * 50.0f, ForceMode.Force);
+                        rigidbody.AddForce(direction * 80.0f, ForceMode.Force);
                     }
                 }
                 break;
@@ -88,6 +88,7 @@ public class SharkAi : MonoBehaviour
         {
             transform.forward = Vector3.Lerp(transform.forward, direction, 2.5f * Time.deltaTime);
         }
+
 
     }
 

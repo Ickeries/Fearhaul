@@ -55,6 +55,7 @@ public class Projectile : MonoBehaviour
         if (other.GetComponent<Stats>())
         {
             other.GetComponent<Stats>().addHealth(-attackPower);
+            other.GetComponent<Stats>().push(this.transform.forward);
         }
         if (other.gameObject.layer == 9 || other.gameObject.layer == 10)
         {

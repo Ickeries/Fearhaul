@@ -13,8 +13,6 @@ public class BoatController : MonoBehaviour
     public float boatChargeSpeed = 48.0f;
     public float boatRotationSpeed = 100.0f;
     public float jumpStrength = 10.0f;
-    public TMP_Text currentStateText;
-
     private Vector3 force;
     private Vector3 gravity;
     private Vector2 movement;
@@ -69,46 +67,46 @@ public class BoatController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (movement.x != 0.0f)
-        {
-            rigidbody.AddTorque(new Vector3(0.0f, movement.x * 50.0f, 0.0f));
-        }
 
+        Vector3 forwardVector = Camera.main.transform.forward * movement.y;
+        Vector3 rightVector = Camera.main.transform.right * movement.x;
+        Vector3 finalVector = forwardVector + rightVector;
         // Calculates input direction with respect to camera direction to create a final input
         switch (state)
         { 
         case STATES.Idle:
                     //gravity += new Vector3(0.0f, 200.0f, 0.0f);
-                if (movement.y > 0.0f)
+                if (movement.y != 0.0f)
                 {
                     enter_state(STATES.Moving);
                 }
+
                 force = Vector3.Lerp(force, new Vector3(0.0f, 0.0f, 0.0f), 1.0f * Time.deltaTime);
                 break;
         case STATES.Moving:
                 //gravity += new Vector3(0.0f, 200.0f, 0.0f);
-                if (input_charging > 0.0f)
-                {
-                    enter_state(STATES.Charge);
-                }
-                else if (movement.sqrMagnitude == 0.0f)
+                if (movement.y == 0.0f)
                 {
                     enter_state(STATES.Idle);
                 }
-                force = transform.forward * movement.y * boatSpeed;
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, boatRotationSpeed * Time.deltaTime);
+                if (input_charging == 1.0f)
+                {
+                    enter_state(STATES.Charge);
+                }
+                force = this.transform.forward * movement.y * boatSpeed;
+                
                 break;
         case STATES.Charge:
                 if (input_charging == 0.0f)
                 {
-                    enter_state(STATES.Idle);
+                    enter_state(STATES.Moving);
                 }
-                else if (movement.sqrMagnitude == 0.0f)
+                else if (movement.y == 0.0f)
                 {
                     enter_state(STATES.Idle);
                 }
-                force = transform.forward * boatChargeSpeed;
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, boatRotationSpeed * Time.deltaTime);
+                force = this.transform.forward * boatChargeSpeed;
+
                 break;
         }
         gravity += new Vector3(0.0f, -16.0f * Time.deltaTime, 0.0f);
@@ -116,6 +114,12 @@ public class BoatController : MonoBehaviour
         {
             rigidbody.AddForce(force, ForceMode.Force);
         }
+
+        if (movement.x != 0.0f)
+        {
+            this.transform.Rotate(new Vector3(0.0f, 45.0f * movement.x * Time.deltaTime, 0.0f));
+        }
+
         rigidbody.AddForce(new Vector3(0.0f, -16.0f, 0.0f), ForceMode.Acceleration);
     }
 

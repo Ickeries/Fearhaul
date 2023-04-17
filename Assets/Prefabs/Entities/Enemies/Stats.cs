@@ -7,6 +7,9 @@ public class Stats : MonoBehaviour
 {
     // References
     public Slider slider;
+    public MeshRenderer mesh;
+    public Animator animator;
+    public GameObject damageText;
     public List<GameObject> Loot = new List<GameObject>();
 
     public int maxHealth = 100;
@@ -19,6 +22,8 @@ public class Stats : MonoBehaviour
     public int lootAmount = 0;
     public bool destroyWhenDead = false;
 
+    private float infoTimer = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +35,7 @@ public class Stats : MonoBehaviour
     void Update()
     {
         lerpedHealth = (int)Mathf.Lerp(lerpedHealth, currentHealth, 2.5f * Time.deltaTime);
+        
         if (isDead() && destroyWhenDead)
         {
             spawnRandomLoot(lootAmount, this.transform.position);
@@ -39,14 +45,24 @@ public class Stats : MonoBehaviour
         {
             slider.value = (float)lerpedHealth / (float)maxHealth;
         }
+
+        if (mesh != null)
+        {
+            Color healthColor = Color.white - (Color.blue + Color.green) * (1 - (float)lerpedHealth / (float)maxHealth);
+            mesh.material.SetColor("_Color", healthColor);
+        }
     }
 
     public void addHealth(float health)
     {
         currentHealth = (int)Mathf.Clamp(currentHealth + health, 0, maxHealth);
-        if (health < 0)
+        if (health < 0f)
         {
-
+            if (animator != null)
+            {
+                animator.Play("hurt", 0, 0.0f);
+            }
+            //GameObject damageTextInstance = Instantiate(damageText, this.transform.position + new Vector3(0f, 8.0f, 0.0f), Quaternion.identity);
         }
     }
 
@@ -78,6 +94,17 @@ public class Stats : MonoBehaviour
                 LootInstance.GetComponent<Rigidbody>().AddForce(launchDirection, ForceMode.Impulse);
             }
         }
+
+    }
+
+    public void push(Vector3 direction)
+    {
+        this.GetComponent<Rigidbody>().AddForce(direction * 10.0f, ForceMode.Impulse);
+    }
+
+
+    public void showInfo()
+    {
 
     }
 }

@@ -10,20 +10,29 @@ public class Inputs : MonoBehaviour
     public WeaponController weapons;
 
     public LayerMask focusLayer;
-    private GameObject focused_object;
+    private GameObject focusedObject;
 
     void Update()
     {
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
         RaycastHit hit;
-        Physics.Raycast(ray, out hit, Mathf.Infinity, focusLayer);
+        Physics.Raycast(ray, out hit, 200.0f, focusLayer);
+        focusedObject = null;
         if (hit.collider != null)
         {
-            focused_object = hit.collider.gameObject;
-        }else
-        {
-            focused_object = null;
+            focusedObject = hit.collider.gameObject;
         }
+
+        if (focusedObject != null)
+        {
+            switch (focusedObject.tag)
+            {
+                case "Enemy":
+                    focusedObject.GetComponent<Stats>().showInfo();
+                    break;
+            }
+        }
+
     }
 
     void OnMove(InputValue movementValue)
@@ -63,10 +72,50 @@ public class Inputs : MonoBehaviour
 
     void OnInteract()
     {
-        if (focused_object != null && focused_object.tag == "WeaponPickup")
+        if (focusedObject == null) 
         {
-            weapons.pickupWeapon(focused_object.GetComponent<WeaponPickup>());
+            return;
         }
+
+
+        switch(focusedObject.tag)
+        {
+            case "WeaponPickup":
+                weapons.pickupWeapon(focusedObject.GetComponent<WeaponPickup>());
+                break;
+        }
+
+        
+    }
+
+    void OnAim(InputValue lockOnValue)
+    {
+        camera.aiming = lockOnValue.Get<float>();
+    }
+
+    void OnLockOn(InputValue lockOnValue)
+    {
+        print(lockOnValue.Get<float>());
+        // Pressed
+        if(lockOnValue.Get<float>() == 1.0f)
+        {
+            if (focusedObject == null)
+            {
+                return;
+            }
+            switch (focusedObject.tag)
+            {
+                case "Enemy":
+                    camera.lockOnTo(focusedObject.gameObject);
+                    break;
+            }
+        }
+        // Unpressed
+        else
+        {
+            camera.resetLockOn();
+        }
+
     }
 
 }
