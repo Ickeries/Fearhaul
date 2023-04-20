@@ -57,7 +57,6 @@ public class BoatController : MonoBehaviour
             if (!collision.GetComponent<Stats>().isStaggered())
             {
                 Vector3 launchForce = new Vector3(Random.Range(-1.0f, 1.0f) * 2.0f * force.x, 0.1f * force.magnitude, Random.Range(-1.0f, 1.0f) * 2.0f * force.z);
-                //collision.GetComponent<Stats>().launch(launchForce, 10);
                 collision.GetComponent<Stats>().addHealth(-10);
             } 
         }

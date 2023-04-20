@@ -53,7 +53,7 @@ public class PlayerCamera : MonoBehaviour
 
         if (lockOnTarget == null)
         {
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(0f, 0f, -1f), 5.0f * Time.deltaTime);
+            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(0f, 0f, -15.0f), 5.0f * Time.deltaTime);
         }
         else
         {
