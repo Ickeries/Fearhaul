@@ -47,7 +47,6 @@ public class Inputs : MonoBehaviour
 
     void OnLook(InputValue lookValue)
     {
-        camera.OnLook(lookValue);
     }
 
     void OnZoomIn()

@@ -12,8 +12,7 @@ public class PlayerCamera : MonoBehaviour
     public float rotationSpeed = 25.0f;
 
     public Transform pivot;
-    public Transform follow;
-    public Transform aim;
+    public Transform followTransform;
 
     private GameObject lockOnTarget = null;
 
@@ -34,32 +33,11 @@ public class PlayerCamera : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Set position to follow
-        if(follow != null)
+        if (followTransform != null)
         {
-            pivot.position = Vector3.Lerp(pivot.position, follow.position, 5.0f * Time.deltaTime);
+            pivot.transform.position = followTransform.position;
         }
-        // Look at lock on target
-        if (lockOnTarget != null) 
-        { 
-            pivot.transform.LookAt(lockOnTarget.transform.position);
-            rotationX = pivot.transform.rotation.eulerAngles.x;
-            rotationY = pivot.transform.rotation.eulerAngles.y;
-        }
-        else
-        {
-            pivot.localRotation = Quaternion.Euler(rotationX, rotationY, 0.0f);
-        }
-
-        if (lockOnTarget == null)
-        {
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(0f, 0f, -15.0f), 5.0f * Time.deltaTime);
-        }
-        else
-        {
-            this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(0f, 0f, -15.0f), 55.0f * Time.deltaTime);
-        }
-
+        pivot.transform.localRotation = Quaternion.Euler(rotationX, rotationY, 0.0f);
     }
 
     public void lockOnTo(GameObject lockOnObject)
@@ -68,8 +46,8 @@ public class PlayerCamera : MonoBehaviour
     }
 
     public void resetLockOn()
-    { 
-        lockOnTarget = null; 
+    {
+        lockOnTarget = null;
     }
 
 
@@ -80,10 +58,10 @@ public class PlayerCamera : MonoBehaviour
     }
 
 
-    public void OnLook(InputValue movementValue)
+    public void OnLook(Vector2 movementValue)
     {
-        rotationX -= movementValue.Get<Vector2>().y * rotationSpeed * Time.deltaTime;
-        rotationY += movementValue.Get<Vector2>().x * rotationSpeed * Time.deltaTime;
+        rotationX -= movementValue.y * rotationSpeed * Time.deltaTime;
+        rotationY += movementValue.x * rotationSpeed * Time.deltaTime;
         rotationX = Mathf.Clamp(rotationX, -45.0f, 25.0f);
     }
 
