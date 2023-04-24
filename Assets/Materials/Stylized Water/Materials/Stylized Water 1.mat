@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Stylized Water 1
   m_Shader: {fileID: 4800000, guid: c8110ef7c96474f73b2ee5f90e026b10, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - SHADOWS
   m_InvalidKeywords:
@@ -20,6 +22,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -66,12 +69,12 @@ Material:
     - _WaveNormalScale: 20
     - _WaveNormalSpeed: 0.05
     m_Colors:
-    - _DeepColor: {r: 0, g: 0.012465047, b: 0.122641504, a: 1}
+    - _DeepColor: {r: 0.01677644, g: 0.04162885, b: 0.2735849, a: 1}
     - _EdgeFoamColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FarColor: {r: 0.11863652, g: 0.47998604, b: 0.8113208, a: 1}
+    - _FarColor: {r: 0, g: 0.044131763, b: 0.084905684, a: 1}
     - _SSSColor: {r: 0.15222874, g: 0.2735849, b: 0.06323425, a: 1}
     - _ShadowColor: {r: 0.16220185, g: 0.2170624, b: 0.254717, a: 1}
-    - _ShallowColor: {r: 0.44313726, g: 0.9137255, b: 0.6627451, a: 1}
+    - _ShallowColor: {r: 0.048593808, g: 0.14372171, b: 0.26415092, a: 1}
     - _SparkleColor: {r: 0.54901963, g: 0.9607843, b: 0.8156863, a: 1}
     - _SunSpecularColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
     public float timeAlive = 0.5f;
     public float gravityMultiplier = 1.0f;
     public GameObject explosion_prefab;
+    public LayerMask collideLayers;
     // Start is called before the first frame update
 
     void Awake()
@@ -55,9 +56,11 @@ public class Projectile : MonoBehaviour
         if (other.GetComponent<Stats>())
         {
             other.GetComponent<Stats>().addHealth(-attackPower);
-            other.GetComponent<Stats>().push(this.transform.forward);
+            other.GetComponent<Stats>().addStagger(10);
         }
-        if (other.gameObject.layer == 9 || other.gameObject.layer == 10)
+
+        // Check if other is in collideLayers
+        if ( (collideLayers.value & 1 << other.gameObject.layer) > 0)
         {
             if (explosion_prefab != null)
             {

@@ -16,19 +16,22 @@ public class Stats : MonoBehaviour
     private int currentHealth = 100;
     private int lerpedHealth = 100;
 
-    private int maxStagger = 100;
+    public int maxStagger = 100;
     private int currentStagger = 0;
 
     public int lootAmount = 0;
     public bool destroyWhenDead = false;
 
     private float infoTimer = 0.0f;
+    public float Height = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
-        currentStagger = maxStagger;
+        lerpedHealth = maxHealth;
+        currentStagger = 0;
+        mesh.material = Instantiate<Material>(mesh.material);
     }
 
     // Update is called once per frame
@@ -43,27 +46,21 @@ public class Stats : MonoBehaviour
         }
         if (slider != null)
         {
-            slider.value = (float)lerpedHealth / (float)maxHealth;
+            slider.value =  (float)lerpedHealth / (float)maxHealth;
         }
 
         if (mesh != null)
         {
-            Color healthColor = Color.white - (Color.blue + Color.green) * (1 - (float)lerpedHealth / (float)maxHealth);
-            mesh.material.SetColor("_Color", healthColor);
+            float t = Height - ((float)lerpedHealth / (float)maxHealth) * Height;
+            mesh.material.SetFloat("_fillHeight", t);
+
         }
     }
 
     public void addHealth(float health)
     {
+        
         currentHealth = (int)Mathf.Clamp(currentHealth + health, 0, maxHealth);
-        if (health < 0f)
-        {
-            if (animator != null)
-            {
-                animator.Play("hurt", 0, 0.0f);
-            }
-            //GameObject damageTextInstance = Instantiate(damageText, this.transform.position + new Vector3(0f, 8.0f, 0.0f), Quaternion.identity);
-        }
     }
 
     public bool isDead()
@@ -80,6 +77,11 @@ public class Stats : MonoBehaviour
     public bool isStaggered()
     {
         return currentStagger > maxStagger;
+    }
+
+    public void resetStagger()
+    {
+        currentStagger = 0;
     }
 
     public void spawnRandomLoot(int amount, Vector3 atPosition)
