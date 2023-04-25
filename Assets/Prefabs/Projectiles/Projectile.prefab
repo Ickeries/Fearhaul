@@ -148,14 +148,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9ce16b7794ce3448e40c2262aed0b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 100
+  attackPower: 15
   staggerPower: 5
   timeAlive: 2
-  gravityMultiplier: 1
+  gravityMultiplier: 9.8
+  speed: 300
   explosion_prefab: {fileID: 4740719344561975414, guid: baa3f3b6a35466b4689dffb1363f8bc3, type: 3}
+  splash: {fileID: 179044, guid: 8a3142fc12013184fbf3dd43c8f2956e, type: 3}
   collideLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1536
 --- !u!96 &6032023181127098106
 TrailRenderer:
   serializedVersion: 3
@@ -294,7 +296,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8631085776621888626}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -1.6473057, y: 3.6648188, z: 3.7386851}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []

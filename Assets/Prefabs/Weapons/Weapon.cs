@@ -5,98 +5,72 @@ using TMPro;
 
 public class Weapon : MonoBehaviour
 {
-    public Animator animator;
-    public Transform spawnProjectileTransform;
-    public GameObject projectile;
-    public Transform pivotY;
-    public Transform pivotX;
+    // Components and Children
+    private Animator animator;
+    public Transform projectileSpawn;
 
+    // Attributes
+    [SerializeField] private float spread = 1.0f; // value in degrees
+    [SerializeField] private float timeBetweenShots = 0.5f;
+    private float betweenShotsTimers = 0.0f;
+    [SerializeField] private float shootSpeedMultiplier = 1.1f;
+    [SerializeField] private float recoilStrength = 0.1f;
 
-    public TextMeshPro ammoText;
-
-
-    public float spread = 5.0f;
-    public float timeBetweenShots = 0.5f;
-    public float fireSpeed = 100.0f;
-    public int clipSize = 10;
-    public float reloadTime = 3.0f;
-    private float reloadTimer = 3.0f;
-    private int currentAmmo = 10;
-    private float shootTimer = 0.0f;
-    public float recoilStrength = 0.0f;
-    public Gradient ammoTextGradient;
-
-    private Vector3 lookAtPosition = new Vector3(0f, 0f, 0f);
-
+    // Reloading
+    [SerializeField] private float timeToReload = 1.0f;
+    private float reloadTimer = 0.0f;
     private bool reloading = false;
-    // Start is called before the first frame update
+
+    // Ammo
+    [SerializeField] private int maxAmmo = 999;
+    [SerializeField] private int clipSize = 24;
+    private int currentAmmo = 0;
+
+    [SerializeField] private List<GameObject> projectiles = new List<GameObject>();
+
     void Start()
     {
         currentAmmo = clipSize;
     }
-    
+
     void FixedUpdate()
     {
-        Debug.DrawRay(spawnProjectileTransform.position, -this.spawnProjectileTransform.forward * 200.0f);
-    }
-    
-    void Update()
-    {
-        shootTimer -= Time.deltaTime;
-        if (shootTimer <= 0.0f)
-        {
-            shootTimer= 0.0f;
-        }
-
         if (reloading == true)
         {
             reloadTimer -= Time.deltaTime;
             if (reloadTimer <= 0.0f)
             {
                 reloading = false;
-                reloadTimer = reloadTime;
                 currentAmmo = clipSize;
             }
         }
-        ammoText.text = currentAmmo.ToString() + " / " + clipSize.ToString();
-        ammoText.color = ammoTextGradient.Evaluate((float)currentAmmo / (float)clipSize);
-    }
-    public void Look(Vector3 atPosition)
-    {
-       lookAtPosition = Vector3.Lerp(lookAtPosition, atPosition, 10.0f * Time.deltaTime);
-       pivotY.LookAt(lookAtPosition);
-       //pivotX.rotation = Quaternion.Lerp(pivotX.rotation, toRotationX, 1.0f * Time.deltaTime);
+        betweenShotsTimers = Mathf.Clamp(betweenShotsTimers - Time.deltaTime, -1.0f, timeBetweenShots);
     }
 
-    public Vector3 getProjectileSpawnPosition()
+    public int Fire()
     {
-        return spawnProjectileTransform.position;
-    }
-
-    // Returns recoil strength. Make use of that whoever calls this.
-    public void Shoot()
-    {
-        if (shootTimer != 0.0f || reloading == true)
+        // Fail State
+        if (reloading == true || betweenShotsTimers > 0.0f)
         {
-            return;
+            return 1;
         }
-
-        if (currentAmmo > 0)
+        // Success State
+        else
         {
-            animator.Play("fire", 0, 0.0f);
-            shootTimer = timeBetweenShots;
-            float xSpread = Random.Range(-1.0f, 1.0f);
-            float ySpread = Random.Range(-1.0f, 1.0f);
-            Vector3 spreadVector = new Vector3(xSpread, ySpread, 0.0f).normalized * spread;
-            Quaternion rotation = Quaternion.Euler(spreadVector) * pivotX.rotation;
-            GameObject new_projectile = Instantiate(projectile, spawnProjectileTransform.position, rotation);
-            new_projectile.GetComponent<Rigidbody>().AddForce(new_projectile.transform.forward * fireSpeed, ForceMode.Impulse);
-            currentAmmo--;
+            Vector3 spreadDirection = new Vector3(Random.Range(-spread, spread), Random.Range(-spread, spread), 1.0f);
+            Vector3 direction = projectileSpawn.TransformVector(spreadDirection);
+            GameObject newProjectile = Instantiate(projectiles[Random.Range(0, projectiles.Count - 1)], projectileSpawn.position, Quaternion.identity);
+            
+            newProjectile.GetComponent<Projectile>().setDirection(direction);
+            currentAmmo -= 1;
             if (currentAmmo <= 0)
             {
                 reloading = true;
+                reloadTimer = timeToReload;
             }
-
+            betweenShotsTimers = timeBetweenShots;
+            return 0;
         }
+        return 1;
     }
 }

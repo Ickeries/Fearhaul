@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 
     public float boatSpeed = 10f;
     public float boatRotationSpeed = 15f;
-    public float boatChargeSpeedMultiplier = 1.2f;
+    public float boatChargeSpeedMultiplier = 2.0f;
 
     // State Machine
     private PlayerState state;
@@ -26,15 +26,16 @@ public class PlayerController : MonoBehaviour
     public Buoyancy buoyancy;
     Transform targetTransform = null;
 
-
     // Start is called before the first frame update
     void Start()
     {
+
         rigidbody = this.GetComponent<Rigidbody>();
         playerInput = this.GetComponent<PlayerInput>();
         buoyancy = GetComponent<Buoyancy>();
         stateDictionary.Add("idle", new IdleState(this));
         stateDictionary.Add("move", new MoveState(this));
+        stateDictionary.Add("charge", new ChargeState(this));
         state = stateDictionary["idle"];
     }
 
@@ -56,18 +57,18 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100, aimLayerMask))
         {
-            Ray ray2 = new Ray(currentWeapon.getProjectileSpawnPosition(), (hit.point - currentWeapon.getProjectileSpawnPosition()).normalized);
+            Ray ray2 = new Ray(currentWeapon.projectileSpawn.position, (hit.point - currentWeapon.projectileSpawn.position).normalized);
             RaycastHit hit2;
             if(Physics.Raycast(ray2, out hit2, 100, aimLayerMask))
             { 
                 reticleTransform.position = Vector3.Lerp(reticleTransform.position, hit2.point, 5.0f * Time.deltaTime);
-                currentWeapon.transform.forward = Vector3.Lerp(currentWeapon.transform.forward, (hit2.point - currentWeapon.getProjectileSpawnPosition()).normalized, 5.0f * Time.deltaTime);
+                weaponsTransform.forward = Vector3.Lerp(weaponsTransform.forward, (hit2.point - currentWeapon.projectileSpawn.position).normalized, 5.0f * Time.deltaTime);
                 targetTransform = hit.collider.transform;
             }
         }
         else
         {
-            currentWeapon.transform.forward = Vector3.Lerp(currentWeapon.transform.forward, (ray.GetPoint(50.0f) - currentWeapon.getProjectileSpawnPosition()).normalized, 5.0f * Time.deltaTime);
+            weaponsTransform.forward = Vector3.Lerp(weaponsTransform.forward, (ray.GetPoint(50.0f) - currentWeapon.projectileSpawn.position).normalized, 5.0f * Time.deltaTime);
             reticleTransform.position = Vector3.Lerp(reticleTransform.position, ray.GetPoint(50.0f), 5.0f * Time.deltaTime);
         }
 
@@ -109,6 +110,17 @@ public class PlayerController : MonoBehaviour
         Camera.main.GetComponent<PlayerCamera>().OnLook(lookValue.Get<Vector2>());
     }
 
+    void OnAim(InputValue aimValue)
+    {
+        if (aimValue.Get<float>() == 1.0f)
+        {
+            Camera.main.GetComponent<PlayerCamera>().setZoom(5);
+        }
+        else
+        {
+            Camera.main.GetComponent<PlayerCamera>().setZoom(30);
+        }
+    }
 
 }
 
@@ -147,10 +159,9 @@ public class IdleState: PlayerState
             controller.ChangeState("move");
         }
 
-        if (controller.playerInput.actions["Fire"].ReadValue<float>() == 1.0)
+        if (controller.playerInput.actions["Fire"].ReadValue<float>() == 1.0f)
         {
-            controller.currentWeapon.Shoot();
-            controller.getRigidbody().AddForce(-controller.currentWeapon.transform.forward * controller.currentWeapon.recoilStrength, ForceMode.Impulse);
+            controller.currentWeapon.Fire();
         }
     }
     public void ExitState()
@@ -158,6 +169,7 @@ public class IdleState: PlayerState
 
     }
 }
+
 
 public class MoveState : PlayerState
 {
@@ -179,15 +191,20 @@ public class MoveState : PlayerState
     public void FixedUpdateState()
     {
         Vector3 movementInput = controller.getMoveInputVector();
-        Vector3 movementVector = controller.getMovementVector();
-        if (movementVector.sqrMagnitude == 0.0f)
+        if (movementInput.sqrMagnitude == 0.0f)
         {
             controller.ChangeState("idle");
         }
 
+        if (controller.playerInput.actions["Charge"].ReadValue<float>() == 1.0f)
+        {
+            controller.ChangeState("charge");
+        }
+
         if (movementInput.x != 0.0f)
         {
-            controller.transform.Rotate(new Vector3(0.0f, 45.0f * movementInput.x * Time.deltaTime, 0.0f));
+            controller.transform.Rotate(new Vector3(0.0f, controller.boatRotationSpeed * movementInput.x * Time.deltaTime, 0.0f));
+            controller.getRigidbody().AddRelativeTorque(new Vector3(0.0f, 0.0f, movementInput.x * -20.0f), ForceMode.Force);
         }
         if (movementInput.y != 0.0f && controller.buoyancy.is_underwater()==true)
         {
@@ -197,8 +214,62 @@ public class MoveState : PlayerState
 
         if (controller.playerInput.actions["Fire"].ReadValue<float>() == 1.0)
         {
-            controller.currentWeapon.Shoot();
+            controller.currentWeapon.Fire();
         }
+    }
+    public void ExitState()
+    {
+
+    }
+}
+
+
+public class ChargeState : PlayerState
+{
+    PlayerController controller;
+
+    public ChargeState(PlayerController _controller)
+    {
+        controller = _controller;
+    }
+
+    public void EnterState()
+    {
+
+    }
+    public void UpdateState()
+    {
+
+    }
+    public void FixedUpdateState()
+    {
+        Vector3 movementInput = controller.getMoveInputVector();
+        Vector3 movementVector = controller.getMovementVector();
+        if (movementVector.sqrMagnitude == 0.0f)
+        {
+            controller.ChangeState("idle");
+        }
+
+        if (controller.playerInput.actions["Charge"].ReadValue<float>() == 0.0f)
+        {
+            controller.ChangeState("move");
+        }
+
+        if (movementInput.x != 0.0f)
+        {
+            controller.getRigidbody().AddRelativeTorque(new Vector3(0.0f, 0.0f, movementInput.x * -20.0f), ForceMode.Force);
+            controller.transform.Rotate(new Vector3(0.0f, controller.boatRotationSpeed * movementInput.x * Time.deltaTime, 0.0f));
+        }
+        if (movementInput.y != 0.0f && controller.buoyancy.is_underwater() == true)
+        {
+            controller.getRigidbody().AddForce(controller.transform.forward * movementInput.y * controller.boatSpeed * controller.boatChargeSpeedMultiplier, ForceMode.Force);
+        }
+
+        if (controller.playerInput.actions["Fire"].ReadValue<float>() == 1.0f)
+        {
+            controller.currentWeapon.Fire();
+        }
+
     }
     public void ExitState()
     {

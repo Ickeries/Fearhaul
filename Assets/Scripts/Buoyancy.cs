@@ -16,7 +16,7 @@ public class Buoyancy : MonoBehaviour
     Rigidbody rigidbody;
     int floatersUnderwater;
     bool underwater;
-
+    public float gravityStrength = 9.8f;
     private float movement = 0.0f;
 
     // Start is called before the first frame update
@@ -33,7 +33,7 @@ public class Buoyancy : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rigidbody.AddForce(new Vector3(0f, -9.8f, 0f), ForceMode.Acceleration);
+        rigidbody.AddForce(new Vector3(0f, -gravityStrength, 0f), ForceMode.Acceleration);
 
         floatersUnderwater = 0;
         for (int i = 0; i < floaters.Length; i++)

@@ -1053,6 +1053,22 @@ PrefabInstance:
       propertyPath: InitialModule.gravityModifier.scalar
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 19892036, guid: 5ed6732e57fcc3f4f8418349b9f607c4, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19892036, guid: 5ed6732e57fcc3f4f8418349b9f607c4, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19892036, guid: 5ed6732e57fcc3f4f8418349b9f607c4, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19892036, guid: 5ed6732e57fcc3f4f8418349b9f607c4, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 19992036, guid: 5ed6732e57fcc3f4f8418349b9f607c4, type: 3}
       propertyPath: m_RenderMode
       value: 0

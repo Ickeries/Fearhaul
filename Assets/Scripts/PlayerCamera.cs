@@ -15,7 +15,7 @@ public class PlayerCamera : MonoBehaviour
     public Transform followTransform;
 
     private GameObject lockOnTarget = null;
-
+    private float toZoom = 30.0f;
     public float aiming = 0.0f;
 
     // Start is called before the first frame update
@@ -38,6 +38,8 @@ public class PlayerCamera : MonoBehaviour
             pivot.transform.position = followTransform.position;
         }
         pivot.transform.localRotation = Quaternion.Euler(rotationX, rotationY, 0.0f);
+        Vector3 p = this.transform.localPosition;
+        this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(p.x, p.y, -toZoom), 2.5f * Time.deltaTime);
     }
 
     public void lockOnTo(GameObject lockOnObject)
@@ -50,10 +52,15 @@ public class PlayerCamera : MonoBehaviour
         lockOnTarget = null;
     }
 
+    public void setZoom(float value)
+    {
+        toZoom = value;
+    }
 
     public void addZoom(float value)
     {
         Vector3 p = this.transform.localPosition;
+
         this.transform.localPosition = new Vector3(p.x, p.y, p.z + value);
     }
 
