@@ -13,16 +13,18 @@ public class PlayerCamera : MonoBehaviour
 
     public Transform pivot;
     public Transform followTransform;
+    public PlayerController player;
+
 
     private GameObject lockOnTarget = null;
-    private float toZoom = 30.0f;
+    private float toZoom = 90.0f;
     public float aiming = 0.0f;
+
+    public PlayerInput playerInput;
 
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
@@ -33,11 +35,28 @@ public class PlayerCamera : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (followTransform != null)
+        if (player != null)
         {
-            pivot.transform.position = followTransform.position;
+            if (player.getTarget() != null)
+            {
+                Vector3 toPosition = player.transform.position + (player.getTarget().transform.position - player.transform.position) * 0.5f;
+                pivot.transform.position = Vector3.Lerp(pivot.transform.position, toPosition, 25.0f * Time.deltaTime);
+                //Vector3 flattenedVector = new Vector3(player.getTarget().transform.position.x, 0.0f, player.getTarget().transform.position.z);
+                //Vector3 direction = (flattenedVector - pivot.transform.position).normalized;
+                //Vector3 direction2 = (flattenedVector - transform.position).normalized;
+                //pivot.transform.forward = Vector3.Lerp(pivot.transform.forward, direction, 5.0f * Time.deltaTime);
+                //transform.forward = Vector3.Lerp(transform.forward, direction2, 5.0f * Time.deltaTime);
+                float dist = Vector3.Distance(toPosition, player.transform.position);
+                dist = Mathf.Clamp(dist, 90.0f, 500.0f);
+                toZoom = dist;
+                
+            }
+            else
+            {
+                pivot.transform.position = Vector3.Lerp(pivot.transform.position, player.transform.position, 25.0f * Time.deltaTime);
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.identity, 5.0f * Time.deltaTime);
+            }
         }
-        pivot.transform.localRotation = Quaternion.Euler(rotationX, rotationY, 0.0f);
         Vector3 p = this.transform.localPosition;
         this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(p.x, p.y, -toZoom), 2.5f * Time.deltaTime);
     }
@@ -73,7 +92,7 @@ public class PlayerCamera : MonoBehaviour
     }
 
 
-    public void set_to_fov(float new_fov)
+    public void setFov(float new_fov)
     {
         to_fov = new_fov;
     }

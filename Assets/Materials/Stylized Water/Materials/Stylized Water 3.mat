@@ -88,7 +88,7 @@ Material:
     - _FoamScale: 10
     - _FoamSpeed: 0.1
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0.518
     - _GlossyReflections: 1
     - _MaxSampleDistance: 49
     - _MaxShadowDistance: 50

@@ -139,7 +139,6 @@ public class BoatController : MonoBehaviour
             break;
         case STATES.Charge:
             // Makes the boat tip up slightly when charging
-            Camera.main.GetComponent<PlayerCamera>().set_to_fov(70.0f);
             break;
         }
         state = new_state;
@@ -154,8 +153,7 @@ public class BoatController : MonoBehaviour
             case STATES.Moving:
                 break;
             case STATES.Charge:
-               
-                Camera.main.GetComponent<PlayerCamera>().set_to_fov(60.0f);
+
                 break;
         }
     }

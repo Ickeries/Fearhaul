@@ -12,10 +12,12 @@ public class Projectile : MonoBehaviour
     public float timeAlive = 0.5f;
     public float gravityMultiplier = 1.0f;
     public float speed = 300.0f;
+    [SerializeField] private float speedDamp;
     public GameObject explosion_prefab;
     public GameObject splash;
     public LayerMask collideLayers;
     // Start is called before the first frame update
+    public AnimationCurve damageFalloff;
 
     void Awake()
     {
@@ -25,7 +27,7 @@ public class Projectile : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
-        rigidbody.AddForce(direction * speed, ForceMode.Impulse);
+        rigidbody.AddForce(transform.forward * speed, ForceMode.Impulse);
     }
 
     // Update is called once per frame
@@ -64,7 +66,6 @@ public class Projectile : MonoBehaviour
         {
             other.GetComponent<Stats>().addHealth(-attackPower);
             other.GetComponent<Stats>().addStagger(10);
-            print("LEL");
         }
 
         if ( (collideLayers.value & 1 << other.gameObject.layer) > 0)

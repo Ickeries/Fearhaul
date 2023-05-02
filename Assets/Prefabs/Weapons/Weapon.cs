@@ -27,6 +27,12 @@ public class Weapon : MonoBehaviour
     private int currentAmmo = 0;
 
     [SerializeField] private List<GameObject> projectiles = new List<GameObject>();
+    [SerializeField] Transform flashes;
+    private float flashesTimer;
+
+    [SerializeField] private AudioClip[] fireAudios;
+
+    [SerializeField] private TextMeshPro ammoText;
 
     void Start()
     {
@@ -35,6 +41,7 @@ public class Weapon : MonoBehaviour
 
     void FixedUpdate()
     {
+        ammoText.text = currentAmmo.ToString() + "/" + clipSize.ToString();
         if (reloading == true)
         {
             reloadTimer -= Time.deltaTime;
@@ -45,6 +52,7 @@ public class Weapon : MonoBehaviour
             }
         }
         betweenShotsTimers = Mathf.Clamp(betweenShotsTimers - Time.deltaTime, -1.0f, timeBetweenShots);
+        flashes.localScale = Vector3.Lerp(flashes.localScale, Vector3.zero, 10.0f * Time.deltaTime);
     }
 
     public int Fire()
@@ -57,11 +65,11 @@ public class Weapon : MonoBehaviour
         // Success State
         else
         {
-            Vector3 spreadDirection = new Vector3(Random.Range(-spread, spread), Random.Range(-spread, spread), 1.0f);
-            Vector3 direction = projectileSpawn.TransformVector(spreadDirection);
+            AudioSource.PlayClipAtPoint(fireAudios[0], this.transform.position);
+            muzzleFlash();
             GameObject newProjectile = Instantiate(projectiles[Random.Range(0, projectiles.Count - 1)], projectileSpawn.position, Quaternion.identity);
-            
-            newProjectile.GetComponent<Projectile>().setDirection(direction);
+            newProjectile.transform.rotation = this.transform.rotation;
+            newProjectile.transform.Rotate(new Vector3(0.0f, Random.Range(-spread, spread), 0.0f));
             currentAmmo -= 1;
             if (currentAmmo <= 0)
             {
@@ -73,4 +81,22 @@ public class Weapon : MonoBehaviour
         }
         return 1;
     }
+
+    void muzzleFlash()
+    {
+        int randomInt = Random.Range(0, flashes.childCount);
+        for (int i = 0; i < flashes.childCount; i++)
+        {
+            if (i == randomInt)
+            {
+                flashes.GetChild(i).gameObject.SetActive(true);
+            }
+            else
+            {
+                flashes.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+        flashes.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+    }
+
 }
