@@ -7,7 +7,7 @@ public class octopusScript : MonoBehaviour
     private enum STATES {Wander, Alert, Staggered, Shoot}
     private STATES state = STATES.Wander;
     private Rigidbody rigidbody;
-    private STATS stats; 
+    private Stats stats; 
     private Buoyancy buoyancy;
     private Animator animator;
 
@@ -64,6 +64,7 @@ public class octopusScript : MonoBehaviour
                     rigidbody.AddForce(direction * 50.0f, ForceMode.Force);
                 }
             }
+                break;
            case STATES.Alert:
             if (target == null)
             {
@@ -116,11 +117,6 @@ public class OctShooting : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        onRange = Vector3.Distance(transform.position, PlayerPrefs.position<range)
-        if (onRange)
-        transform.LookAt(Player);
-    }
+
 
 }
