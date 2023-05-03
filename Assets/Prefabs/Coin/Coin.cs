@@ -7,8 +7,10 @@ public class Coin : MonoBehaviour
 
     Rigidbody rigidbody;
     // Start is called before the first frame update
+    public int coin;
 
     //for the coin magnet
+
     public float CoinSpeed;
     public Transform player;
     private bool ReadyToMove = false;

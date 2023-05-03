@@ -35,6 +35,7 @@ public class PlayerCamera : MonoBehaviour
 
     void FixedUpdate()
     {
+        print(player);
         if (player != null)
         {
             if (player.getTarget() != null)
