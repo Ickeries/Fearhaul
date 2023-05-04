@@ -43,7 +43,8 @@ public class PlayerController : MonoBehaviour
 
     private GameObject target;
     [SerializeField] private AudioClip[] chargeHitSounds;
-
+    [SerializeField] private Transform modelTransform;
+    [SerializeField] private AudioSource motorAudioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +78,9 @@ public class PlayerController : MonoBehaviour
                 {
                     changeState(States.move);
                 }
+                motorAudioSource.volume = Mathf.Lerp(motorAudioSource.volume, 0.0f, 2.5f * Time.deltaTime);
+                motorAudioSource.pitch = Mathf.Lerp(motorAudioSource.pitch, 0.5f, 2.5f * Time.deltaTime);
+                //modelTransform.eulerAngles = Vector3.Lerp(modelTransform.eulerAngles, new Vector3(0f, modelTransform.eulerAngles.y, modelTransform.eulerAngles.z), 2.0f * Time.deltaTime);
                 break; 
             case States.move:
                 if (movement.y == 0.0f)
@@ -87,6 +91,10 @@ public class PlayerController : MonoBehaviour
                 {
                     changeState(States.charge);
                 }
+                motorAudioSource.pitch = Mathf.Lerp(motorAudioSource.pitch, 1.5f, 2.5f * Time.deltaTime);
+                motorAudioSource.volume = Mathf.Lerp(motorAudioSource.volume, 0.5f, 2.5f * Time.deltaTime);
+                //modelTransform.eulerAngles = Vector3.Lerp(modelTransform.eulerAngles, new Vector3(10f, modelTransform.eulerAngles.y, modelTransform.eulerAngles.z), 2.0f * Time.deltaTime);
+                rigidbody.AddRelativeTorque(new Vector3(90f, 0, 0), ForceMode.Force);
                 rigidbody.AddForce(transform.forward * movement.y * boatSpeed, ForceMode.Force);
                 break;
             case States.charge:
@@ -98,6 +106,9 @@ public class PlayerController : MonoBehaviour
                 {
                     changeState(States.move);
                 }
+                motorAudioSource.volume = Mathf.Lerp(motorAudioSource.volume, 0.5f, 2.5f * Time.deltaTime);
+                motorAudioSource.pitch = Mathf.Lerp(motorAudioSource.pitch, 2.5f, 2.5f * Time.deltaTime);
+                rigidbody.AddRelativeTorque(new Vector3(90f, 0, 0), ForceMode.Force);
                 rigidbody.AddForce(transform.forward * movement.y * boatSpeed * boatChargeSpeedMultiplier, ForceMode.Force);
                 break;
             case States.aim:
@@ -106,6 +117,7 @@ public class PlayerController : MonoBehaviour
 
         if (movement.x != 0.0f)
         {
+            rigidbody.AddRelativeTorque(new Vector3(0, 0, 20f * movement.x), ForceMode.Force);
             rigidbody.AddTorque(new Vector3(0.0f, movement.x * 100.0f, 0.0f));
         }
         // Aiming
@@ -161,13 +173,13 @@ public class PlayerController : MonoBehaviour
         switch(newState)
         { 
             case States.idle:
-                
+                Camera.main.GetComponent<PlayerCamera>().setFov(60f);
                 break;
             case States.move:
-                
+                Camera.main.GetComponent<PlayerCamera>().setFov(60f);
                 break;
             case States.charge:
-               
+                Camera.main.GetComponent<PlayerCamera>().setFov(80f);
                 break;
         }
         state = newState;
