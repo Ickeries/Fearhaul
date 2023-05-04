@@ -19,7 +19,6 @@ public class SlimeEnemy : MonoBehaviour
     private float wanderTime;
 
     private Vector3 direction;
-
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();

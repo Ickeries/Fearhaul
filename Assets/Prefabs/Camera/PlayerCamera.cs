@@ -17,7 +17,7 @@ public class PlayerCamera : MonoBehaviour
 
 
     private GameObject lockOnTarget = null;
-    private float toZoom = 90.0f;
+    private float toZoom = 80.0f;
     public float aiming = 0.0f;
 
     public PlayerInput playerInput;
@@ -35,20 +35,20 @@ public class PlayerCamera : MonoBehaviour
 
     void FixedUpdate()
     {
-        print(player);
         if (player != null)
         {
+            pivot.transform.rotation = Quaternion.Lerp(pivot.transform.rotation, player.transform.rotation, 5.0f * Time.deltaTime);
             if (player.getTarget() != null)
             {
                 Vector3 toPosition = player.transform.position + (player.getTarget().transform.position - player.transform.position) * 0.5f;
-                pivot.transform.position = Vector3.Lerp(pivot.transform.position, toPosition, 25.0f * Time.deltaTime);
+                pivot.transform.position = Vector3.Lerp(pivot.transform.position, toPosition, 10.0f * Time.deltaTime);
                 //Vector3 flattenedVector = new Vector3(player.getTarget().transform.position.x, 0.0f, player.getTarget().transform.position.z);
                 //Vector3 direction = (flattenedVector - pivot.transform.position).normalized;
                 //Vector3 direction2 = (flattenedVector - transform.position).normalized;
                 //pivot.transform.forward = Vector3.Lerp(pivot.transform.forward, direction, 5.0f * Time.deltaTime);
                 //transform.forward = Vector3.Lerp(transform.forward, direction2, 5.0f * Time.deltaTime);
                 float dist = Vector3.Distance(toPosition, player.transform.position);
-                dist = Mathf.Clamp(dist, 90.0f, 500.0f);
+                dist = Mathf.Clamp(dist, 80.0f, 500.0f);
                 toZoom = dist;
                 
             }

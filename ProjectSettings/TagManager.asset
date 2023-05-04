@@ -8,6 +8,7 @@ TagManager:
   - ActiveEnemies
   - Magnet
   - WeaponPickup
+  - Coin
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Projectile
   - PostProcessing
   - Focusable
-  - 
+  - Items
   - 
   - 
   - 

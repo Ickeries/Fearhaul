@@ -15,6 +15,9 @@ public class Coin : MonoBehaviour
     public Transform player;
     private bool ReadyToMove = false;
     public float coinMagnetSpeed;
+
+    [SerializeField] private AudioClip coinSound;
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -40,6 +43,8 @@ public class Coin : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
+            AudioSource.PlayClipAtPoint(coinSound, this.transform.position, 5.0f);
+            collision.gameObject.GetComponent<Collectables>().coins += 1;
             Destroy(this.gameObject);
         }
     }

@@ -25,7 +25,7 @@ public class Stats : MonoBehaviour
     public float Height = 1.0f;
 
     private Vector3 knockBack;
-
+    [SerializeField] private AudioClip hurtSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +57,10 @@ public class Stats : MonoBehaviour
         currentHealth = (int)Mathf.Clamp(currentHealth + health, 0, maxHealth);
         if (health < 0f)
         {
+            if (hurtSound != null)
+            {
+                AudioSource.PlayClipAtPoint(hurtSound, this.transform.position, 5.0f);
+            }
             animator.Play("hurt", 0, 0.0f);
         }
     }

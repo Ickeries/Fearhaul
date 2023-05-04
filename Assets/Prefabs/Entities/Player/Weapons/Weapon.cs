@@ -27,6 +27,7 @@ public class Weapon : MonoBehaviour
     private int currentAmmo = 0;
 
     [SerializeField] private List<GameObject> projectiles = new List<GameObject>();
+    [SerializeField] private GameObject alternateProjectile;
     [SerializeField] Transform flashes;
     private float flashesTimer;
 
@@ -65,7 +66,7 @@ public class Weapon : MonoBehaviour
         // Success State
         else
         {
-            AudioSource.PlayClipAtPoint(fireAudios[0], this.transform.position);
+            AudioSource.PlayClipAtPoint(fireAudios[0], this.transform.position, 5.0f);
             muzzleFlash();
             GameObject newProjectile = Instantiate(projectiles[Random.Range(0, projectiles.Count - 1)], projectileSpawn.position, Quaternion.identity);
             newProjectile.transform.rotation = this.transform.rotation;

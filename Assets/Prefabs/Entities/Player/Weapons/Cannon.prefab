@@ -52,14 +52,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileSpawn: {fileID: 6040744749136719264}
   spread: 1
-  timeBetweenShots: 0.1
-  shootSpeedMultiplier: 1.1
+  timeBetweenShots: 0.25
+  shootSpeedMultiplier: 1
   recoilStrength: 5
   timeToReload: 1
   maxAmmo: 999
   clipSize: 24
   projectiles:
   - {fileID: 2690096911647796819, guid: 81a63f9fda881644e9dfc1b5e9280f9d, type: 3}
+  alternateProjectile: {fileID: 0}
   flashes: {fileID: 905866737948820645}
   fireAudios:
   - {fileID: 8300000, guid: 90ab23238f31f2040a2366e4ba12705c, type: 3}

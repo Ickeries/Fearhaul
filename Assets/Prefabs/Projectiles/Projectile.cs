@@ -72,7 +72,7 @@ public class Projectile : MonoBehaviour
         {
             if (explosion_prefab != null)
             {
-                GameObject explosion_instance = Instantiate(explosion_prefab, this.transform.position, Quaternion.identity);
+                GameObject explosion_instance = Instantiate(explosion_prefab, other.gameObject.transform.position, Quaternion.identity);
             }
             Destroy(this.gameObject);
         }

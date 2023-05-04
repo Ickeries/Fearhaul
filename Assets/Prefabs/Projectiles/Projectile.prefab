@@ -154,6 +154,7 @@ MonoBehaviour:
   timeAlive: 2
   gravityMultiplier: 9.8
   speed: 300
+  speedDamp: 0
   explosion_prefab: {fileID: 4740719344561975414, guid: baa3f3b6a35466b4689dffb1363f8bc3, type: 3}
   splash: {fileID: 179044, guid: 8a3142fc12013184fbf3dd43c8f2956e, type: 3}
   collideLayers:
@@ -417,7 +418,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8631085776621888626}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -436,7 +437,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

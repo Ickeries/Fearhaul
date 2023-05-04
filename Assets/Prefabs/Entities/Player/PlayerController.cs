@@ -42,7 +42,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask aimLayerMask;
 
     private GameObject target;
-    
+    [SerializeField] private AudioClip[] chargeHitSounds;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,13 +73,13 @@ public class PlayerController : MonoBehaviour
         switch(state)
         { 
             case States.idle:
-                if (movement.sqrMagnitude != 0.0f)
+                if (movement.y != 0.0f)
                 {
                     changeState(States.move);
                 }
                 break; 
             case States.move:
-                if (movement.sqrMagnitude == 0.0f)
+                if (movement.y == 0.0f)
                 {
                     changeState(States.idle);
                 }
@@ -86,13 +87,10 @@ public class PlayerController : MonoBehaviour
                 {
                     changeState(States.charge);
                 }
-                if (buoyancy.is_underwater() == true)
-                {
-                    rigidbody.AddForce(flattenedForward() * boatSpeed, ForceMode.Force);
-                }
+                rigidbody.AddForce(transform.forward * movement.y * boatSpeed, ForceMode.Force);
                 break;
             case States.charge:
-                if (movement.sqrMagnitude == 0.0f)
+                if (movement.y == 0.0f)
                 {
                     changeState(States.idle);
                 }
@@ -100,18 +98,16 @@ public class PlayerController : MonoBehaviour
                 {
                     changeState(States.move);
                 }
-                if (buoyancy.is_underwater() == true)
-                {
-                    rigidbody.AddForce(flattenedForward() * boatSpeed * boatChargeSpeedMultiplier, ForceMode.Force);
-                }
+                rigidbody.AddForce(transform.forward * movement.y * boatSpeed * boatChargeSpeedMultiplier, ForceMode.Force);
                 break;
             case States.aim:
                 break;
         }
 
-
-        transform.forward = Vector3.Lerp(transform.forward, getMovementVector(), 2.0f * Time.deltaTime);
-        
+        if (movement.x != 0.0f)
+        {
+            rigidbody.AddTorque(new Vector3(0.0f, movement.x * 100.0f, 0.0f));
+        }
         // Aiming
         Plane plane = new Plane(Vector3.up, weaponsTransform.position);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -212,6 +208,7 @@ public class PlayerController : MonoBehaviour
             Stats stats = other.collider.GetComponent<Stats>();
             if (stats.setKnockBack((other.transform.position - this.transform.position).normalized * 16.0f) == true)
             {
+                AudioSource.PlayClipAtPoint(chargeHitSounds[Random.Range(0, chargeHitSounds.Length-1)], this.transform.position, 1.0f);
                 stats.addHealth(-50f);
             }
         }

@@ -741,6 +741,7 @@ GameObject:
   - component: {fileID: 5740218970840184692}
   - component: {fileID: 3663322478902293660}
   - component: {fileID: 1059299612590625436}
+  - component: {fileID: 7971207347569382243}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -780,7 +781,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 1
-  m_AngularDrag: 0.05
+  m_AngularDrag: 2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -866,6 +867,8 @@ MonoBehaviour:
   aimLayerMask:
     serializedVersion: 2
     m_Bits: 512
+  chargeHitSounds:
+  - {fileID: 8300000, guid: 72bf80cf161b94942b38c9035b97878e, type: 3}
 --- !u!114 &1059299612590625436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -988,6 +991,14 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!81 &7971207347569382243
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7939395337701400747}
+  m_Enabled: 1
 --- !u!1 &8288929049248135664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,9 +1092,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5942471800914828521}
   - component: {fileID: 5761357823479020991}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: MagnetZone
-  m_TagString: Untagged
+  m_TagString: Magnet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

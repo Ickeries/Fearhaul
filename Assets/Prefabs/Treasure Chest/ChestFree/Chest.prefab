@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 3937589066332813762}
   - component: {fileID: 5337585208032807804}
   - component: {fileID: 7833596502661995573}
+  - component: {fileID: 7967849876898045295}
   m_Layer: 9
   m_Name: Chest
   m_TagString: Untagged
@@ -240,7 +241,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &3937589066332813762
 MonoBehaviour:
@@ -265,6 +266,7 @@ MonoBehaviour:
   airAngularDrag: 0
   floatingPower: 15
   waterHeight: 0
+  gravityStrength: 9.8
 --- !u!135 &5337585208032807804
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -299,8 +301,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 0}
+  animator: {fileID: 7967849876898045295}
+  damageText: {fileID: 0}
   Loot:
   - {fileID: 9184764222180386091, guid: aeba4d22308e1b74e98b6a2ea284141c, type: 3}
-  maxHealth: 10
+  maxHealth: 200
+  maxStagger: 100
   lootAmount: 15
   destroyWhenDead: 1
+  Height: 1
+  hurtSound: {fileID: 0}
+--- !u!95 &7967849876898045295
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8303331199027406964}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
