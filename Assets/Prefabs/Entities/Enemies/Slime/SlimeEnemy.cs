@@ -19,6 +19,9 @@ public class SlimeEnemy : MonoBehaviour
     private float wanderTime;
 
     private Vector3 direction;
+
+    public GameObject target;
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -42,10 +45,15 @@ public class SlimeEnemy : MonoBehaviour
         {
             case States.wander:
                 moveTo(originPosition + wanderOriginOffset);
+                if (target != null)
+                {
+                    state = States.chase;
+                }
                 break;
             case States.circle:
                 break;
             case States.chase:
+                rigidbody.AddForce((target.transform.position - this.transform.position).normalized * 100.0f, ForceMode.Force);
                 break;
         }
 
@@ -59,5 +67,22 @@ public class SlimeEnemy : MonoBehaviour
         direction = (toPosition - this.transform.position).normalized;
         direction = new Vector3(direction.x, 0.0f, direction.z);
         rigidbody.AddForce(this.transform.forward * 30.0f, ForceMode.Force);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            target = other.gameObject;
+        }
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            other.gameObject.GetComponent<PlayerController>().hurt(20);
+            other.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 10.0f, 0.0f), ForceMode.Impulse);
+        }
     }
 }

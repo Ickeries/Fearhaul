@@ -51,8 +51,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpawn: {fileID: 6040744749136719264}
-  spread: 1
-  timeBetweenShots: 0.25
+  spread: 10
+  timeBetweenShots: 0.1
   shootSpeedMultiplier: 1
   recoilStrength: 5
   timeToReload: 1
@@ -302,7 +302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4393094665304307297
 RectTransform:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-
+    public int health = 100;
     [SerializeField]
     private Weapon currentWeapon;
     [SerializeField]
@@ -92,10 +92,13 @@ public class PlayerController : MonoBehaviour
                     changeState(States.charge);
                 }
                 motorAudioSource.pitch = Mathf.Lerp(motorAudioSource.pitch, 1.5f, 2.5f * Time.deltaTime);
-                motorAudioSource.volume = Mathf.Lerp(motorAudioSource.volume, 0.5f, 2.5f * Time.deltaTime);
+                motorAudioSource.volume = Mathf.Lerp(motorAudioSource.volume, 0.3f, 2.5f * Time.deltaTime);
                 //modelTransform.eulerAngles = Vector3.Lerp(modelTransform.eulerAngles, new Vector3(10f, modelTransform.eulerAngles.y, modelTransform.eulerAngles.z), 2.0f * Time.deltaTime);
-                rigidbody.AddRelativeTorque(new Vector3(90f, 0, 0), ForceMode.Force);
-                rigidbody.AddForce(transform.forward * movement.y * boatSpeed, ForceMode.Force);
+                if (buoyancy.is_underwater() == true)
+                {
+                    rigidbody.AddRelativeTorque(new Vector3(90f, 0, 0), ForceMode.Force);
+                    rigidbody.AddForce(transform.forward * movement.y * boatSpeed, ForceMode.Force);
+                }
                 break;
             case States.charge:
                 if (movement.y == 0.0f)
@@ -106,10 +109,13 @@ public class PlayerController : MonoBehaviour
                 {
                     changeState(States.move);
                 }
-                motorAudioSource.volume = Mathf.Lerp(motorAudioSource.volume, 0.5f, 2.5f * Time.deltaTime);
+                motorAudioSource.volume = Mathf.Lerp(motorAudioSource.volume, 0.3f, 2.5f * Time.deltaTime);
                 motorAudioSource.pitch = Mathf.Lerp(motorAudioSource.pitch, 2.5f, 2.5f * Time.deltaTime);
-                rigidbody.AddRelativeTorque(new Vector3(90f, 0, 0), ForceMode.Force);
-                rigidbody.AddForce(transform.forward * movement.y * boatSpeed * boatChargeSpeedMultiplier, ForceMode.Force);
+                if (buoyancy.is_underwater() == true)
+                {
+                    rigidbody.AddRelativeTorque(new Vector3(90f, 0, 0), ForceMode.Force);
+                    rigidbody.AddForce(transform.forward * movement.y * boatSpeed * boatChargeSpeedMultiplier, ForceMode.Force);
+                }
                 break;
             case States.aim:
                 break;
@@ -173,13 +179,13 @@ public class PlayerController : MonoBehaviour
         switch(newState)
         { 
             case States.idle:
-                Camera.main.GetComponent<PlayerCamera>().setFov(60f);
+                Camera.main.GetComponent<PlayerCamera>().setFov(50f);
                 break;
             case States.move:
-                Camera.main.GetComponent<PlayerCamera>().setFov(60f);
+                Camera.main.GetComponent<PlayerCamera>().setFov(55f);
                 break;
             case States.charge:
-                Camera.main.GetComponent<PlayerCamera>().setFov(80f);
+                Camera.main.GetComponent<PlayerCamera>().setFov(65f);
                 break;
         }
         state = newState;
@@ -211,6 +217,15 @@ public class PlayerController : MonoBehaviour
         Vector3 right = Camera.main.transform.right * lookInput.x;
         Vector3 result = (forward + right);
         return new Vector3(result.x, 0.0f, result.z);
+    }
+
+    public void hurt(int amount)
+    {
+        health -= amount;
+        if (health < 0.0f)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     void OnCollisionEnter(Collision other)

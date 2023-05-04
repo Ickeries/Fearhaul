@@ -5570,6 +5570,7 @@ GameObject:
   - component: {fileID: 3663322478902293660}
   - component: {fileID: 1059299612590625436}
   - component: {fileID: 7971207347569382243}
+  - component: {fileID: 782415534270196536}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5674,7 +5675,7 @@ MonoBehaviour:
   airAngularDrag: 0
   floatingPower: 15
   waterHeight: 0
-  gravityStrength: 20
+  gravityStrength: 50
 --- !u!114 &3663322478902293660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5687,6 +5688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b0452018d431704db5c45a6f2a5ad01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
   currentWeapon: {fileID: 2222748639763826601}
   camera: {fileID: 0}
   boatSpeed: 100
@@ -5831,6 +5833,27 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7939395337701400747}
   m_Enabled: 1
+--- !u!95 &782415534270196536
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7939395337701400747}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 60f0dbd3d8965a84bab9714f48595949, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8288929049248135664
 GameObject:
   m_ObjectHideFlags: 0

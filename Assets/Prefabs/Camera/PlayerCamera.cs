@@ -17,7 +17,7 @@ public class PlayerCamera : MonoBehaviour
 
 
     private GameObject lockOnTarget = null;
-    private float toZoom = 80.0f;
+    private float toZoom = 60.0f;
     public float aiming = 0.0f;
 
     public PlayerInput playerInput;
@@ -25,6 +25,7 @@ public class PlayerCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -37,7 +38,8 @@ public class PlayerCamera : MonoBehaviour
     {
         if (player != null)
         {
-            pivot.transform.rotation = Quaternion.Lerp(pivot.transform.rotation, player.transform.rotation, 5.0f * Time.deltaTime);
+            rotationY = Mathf.LerpAngle(rotationY, player.transform.eulerAngles.y, 5.0f * Time.deltaTime);
+            pivot.transform.eulerAngles = new Vector3(0.0f, rotationY, 0.0f);
             if (player.getTarget() != null)
             {
                 Vector3 toPosition = player.transform.position + (player.getTarget().transform.position - player.transform.position) * 0.5f;
@@ -48,7 +50,7 @@ public class PlayerCamera : MonoBehaviour
                 //pivot.transform.forward = Vector3.Lerp(pivot.transform.forward, direction, 5.0f * Time.deltaTime);
                 //transform.forward = Vector3.Lerp(transform.forward, direction2, 5.0f * Time.deltaTime);
                 float dist = Vector3.Distance(toPosition, player.transform.position);
-                dist = Mathf.Clamp(dist, 80.0f, 500.0f);
+                dist = Mathf.Clamp(dist, 60.0f, 500.0f);
                 toZoom = dist;
                 
             }
