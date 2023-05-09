@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;  
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     public int health = 100;
+    public float lerpedHealth = 100.0f;
     [SerializeField]
     private Weapon currentWeapon;
     [SerializeField]
@@ -16,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private float boatRotationSpeed = 15f;
     [SerializeField]
     private float boatChargeSpeedMultiplier = 2.0f;
-
+    public Animator animator;
     // States
     private enum States {idle, move, charge, aim}
     private States state = States.idle;
@@ -68,6 +70,11 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        lerpedHealth = Mathf.Lerp(lerpedHealth, (float)health, 2.5f * Time.deltaTime);
+        if (lerpedHealth <= 0.0f)
+        {
+            this.gameObject.SetActive(false);
+        }
         Vector2 movement = move.ReadValue<Vector2>();
 
         // State specific logic
@@ -221,11 +228,13 @@ public class PlayerController : MonoBehaviour
 
     public void hurt(int amount)
     {
+        animator.Play("hurt", 0, 0.0f);
         health -= amount;
-        if (health < 0.0f)
-        {
-            gameObject.SetActive(false);
-        }
+    }
+
+    void OnRestart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     void OnCollisionEnter(Collision other)

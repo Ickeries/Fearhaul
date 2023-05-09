@@ -81,7 +81,7 @@ public class SlimeEnemy : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponent<PlayerController>().hurt(20);
+            other.gameObject.GetComponent<PlayerController>().hurt(10);
             other.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0.0f, 10.0f, 0.0f), ForceMode.Impulse);
         }
     }

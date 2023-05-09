@@ -19,6 +19,7 @@ public class Stats : MonoBehaviour
     private int currentStagger = 0;
 
     public int lootAmount = 0;
+    public float lootLaunchStrength = 10.0f;
     public bool destroyWhenDead = false;
 
     private float infoTimer = 0.0f;
@@ -61,7 +62,10 @@ public class Stats : MonoBehaviour
             {
                 AudioSource.PlayClipAtPoint(hurtSound, this.transform.position, 5.0f);
             }
-            animator.Play("hurt", 0, 0.0f);
+            if(animator != null)
+            {
+                animator.Play("hurt", 0, 0.0f);
+            }
         }
     }
 
@@ -88,13 +92,16 @@ public class Stats : MonoBehaviour
 
     public void spawnRandomLoot(int amount, Vector3 atPosition)
     {
+        if (Loot.Count == 0)
+            return;
+
         for (int i = 0; i < amount; i++)
         {
             GameObject LootInstance = Instantiate(Loot[Random.Range(0, Loot.Count)], this.transform.position, Quaternion.identity);
             // Makes the loot shoot upwards for some oomph.
             if (LootInstance.GetComponent<Rigidbody>() != null)
             {
-                var launchDirection = new Vector3(Random.Range(-1.0f, 1.0f) * 10.0f, Random.Range(4.0f, 8.0f) * 10.0f, Random.Range(-1.0f, 1.0f) * 10.0f);
+                var launchDirection = new Vector3(Random.Range(-1.0f, 1.0f) * 10.0f, Random.Range(4.0f, 8.0f) * lootLaunchStrength, Random.Range(-1.0f, 1.0f) * 10.0f);
                 LootInstance.GetComponent<Rigidbody>().AddForce(launchDirection, ForceMode.Impulse);
             }
         }
