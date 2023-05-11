@@ -55,7 +55,7 @@ public class PlayerCamera : MonoBehaviour
             }
             else
             {
-                pivot.transform.position = Vector3.Lerp(pivot.transform.position, player.transform.position, 25.0f * Time.deltaTime);
+                pivot.transform.position = Vector3.Lerp(pivot.transform.position, player.getAimPosition(), 25.0f * Time.deltaTime);
                 transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.identity, 5.0f * Time.deltaTime);
             }
         }

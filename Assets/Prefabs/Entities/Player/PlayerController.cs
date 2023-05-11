@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private InputAction aim;
     private InputAction look;
     private InputAction charge;
+    private InputAction interact;
 
     private Rigidbody rigidbody;
     private Buoyancy buoyancy;
@@ -48,6 +50,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform modelTransform;
     [SerializeField] private AudioSource motorAudioSource;
     // Start is called before the first frame update
+
+    [SerializeField] TextMeshProUGUI dialoguePopup;
+    [SerializeField] Animator dialoguePopupAnimator;
+
+    bool aiming = false;
     void Start()
     {
         playerInput = this.GetComponent<PlayerInput>();
@@ -57,6 +64,7 @@ public class PlayerController : MonoBehaviour
         aim  = playerInput.actions["Aim"];
         look = playerInput.actions["Look"];
         charge = playerInput.actions["Charge"];
+        interact = playerInput.actions["Interact"];
         rigidbody = this.GetComponent<Rigidbody>();
         buoyancy = GetComponent<Buoyancy>();
     }
@@ -144,41 +152,69 @@ public class PlayerController : MonoBehaviour
             {
                 target = hit.collider.gameObject;
             }
+            if (interact.WasPressedThisFrame())
+            {
+                if (hit.collider.GetComponent<Dialogue>() != null)
+                {
+                    dialoguePopup.text = hit.collider.GetComponent<Dialogue>().getText();
+                    dialoguePopupAnimator.Play("popup", 0, 0.0f);
+                }
+            }
         }
         if (aim.ReadValue<float>() == 0.0f)
         {
             target = null;
         }
 
-        if (target == null)
+        if (aiming == true)
         {
-            float distance;
-            if (plane.Raycast(ray, out distance))
+            if (target == null)
             {
-                Vector3 hitPoint = ray.GetPoint(distance);
-                Vector3 weaponDirection = (hitPoint - weaponsTransform.position).normalized;
-                weaponsTransform.forward = Vector3.Lerp(weaponsTransform.forward, new Vector3(weaponDirection.x, 0.0f, weaponDirection.z), 15.0f * Time.deltaTime);
+                float distance;
+                if (plane.Raycast(ray, out distance))
+                {
+                    Vector3 hitPoint = ray.GetPoint(distance);
+                    Vector3 weaponDirection = (hitPoint - weaponsTransform.position).normalized;
+                    weaponsTransform.forward = Vector3.Lerp(weaponsTransform.forward, new Vector3(weaponDirection.x, 0.0f, weaponDirection.z), 15.0f * Time.deltaTime);
+                }
+            }
+            else
+            {
+                weaponsTransform.LookAt(new Vector3(target.transform.position.x, 0.0f, target.transform.position.z));
             }
         }
         else
         {
-            weaponsTransform.LookAt(new Vector3(target.transform.position.x, 0.0f, target.transform.position.z));
+            weaponsTransform.forward = Vector3.Lerp(weaponsTransform.forward, this.transform.forward, 5.0f * Time.deltaTime);
         }
 
 
         // Firing
         if (fire.ReadValue<float>() == 1.0f)
         {
-            currentWeapon.Fire();
+            if (aiming == true)
+            {
+                currentWeapon.Fire();
+            }
         }
 
 
         // Jumping
-        if (jump.ReadValue<float>() == 1.0f && buoyancy.is_underwater())
+        if (jump.ReadValue<float>() == 1.0f && buoyancy.is_underwater() && aiming == false)
         {
             rigidbody.AddForce(new Vector3(0.0f, 5.0f, 0.0f), ForceMode.Impulse);
         }
 
+
+        //Aiming
+        if(aim.ReadValue<float>() == 1.0f)
+        {
+            aiming = true;
+        }
+        else
+        {
+            aiming = false;
+        }
     }
 
     void changeState(States newState)
@@ -230,6 +266,17 @@ public class PlayerController : MonoBehaviour
     {
         animator.Play("hurt", 0, 0.0f);
         health -= amount;
+    }
+
+    public Vector3 getAimPosition()
+    {
+        if (aiming == true)
+            return transform.position + weaponsTransform.forward * 8.0f;
+        else
+        {
+            return transform.position;
+        }
+
     }
 
     void OnRestart()

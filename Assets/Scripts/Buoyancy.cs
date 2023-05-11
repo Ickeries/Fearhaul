@@ -36,6 +36,7 @@ public class Buoyancy : MonoBehaviour
         rigidbody.AddForce(new Vector3(0f, -gravityStrength, 0f), ForceMode.Acceleration);
 
         floatersUnderwater = 0;
+
         for (int i = 0; i < floaters.Length; i++)
         {
             float difference = floaters[i].position.y - waterHeight;
@@ -43,6 +44,20 @@ public class Buoyancy : MonoBehaviour
             {
                 rigidbody.AddForceAtPosition(Vector3.up * floatingPower * Mathf.Abs(difference), floaters[i].position, ForceMode.Force);
                 floatersUnderwater += 1;
+                if (!underwater)
+                {
+                    underwater = true;
+                    SwitchState(underwater);
+                }
+            }
+        }
+        if (floaters.Length == 0)
+        {
+            float difference = transform.position.y - waterHeight;
+            if (difference < 0)
+            {
+                rigidbody.AddForceAtPosition(Vector3.up * floatingPower * Mathf.Abs(difference), transform.position, ForceMode.Force);
+                floatersUnderwater = 1;
                 if (!underwater)
                 {
                     underwater = true;
