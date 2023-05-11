@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.003204829, g: 0.0063439845, b: 0.014498586, a: 1}
+  m_IndirectSpecularColor: {r: 0.0032013855, g: 0.0063153747, b: 0.014413998, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -837,6 +837,7 @@ GameObject:
   - component: {fileID: 299097510}
   - component: {fileID: 299097513}
   - component: {fileID: 299097514}
+  - component: {fileID: 299097515}
   m_Layer: 9
   m_Name: Barrel
   m_TagString: Untagged
@@ -953,6 +954,19 @@ MonoBehaviour:
   destroyWhenDead: 1
   Height: 1
   hurtSound: {fileID: 0}
+--- !u!114 &299097515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299097509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b7ce2f6d8e3ce428d9ffb049bba3c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: This is a very big barrel...
 --- !u!1 &315143841 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a4301f3869f382c4dbfe8f1a446e49b3, type: 3}
@@ -1059,8 +1073,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Shoot the chest to open it!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1149,7 +1163,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2115,6 +2129,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4392599ba3d887243883b2f9ae4d08b9, type: 3}
+--- !u!1 &1025150372 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8303331199027406964, guid: ffd3e66d4df2a554fb995d41f7ffe4c2, type: 3}
+  m_PrefabInstance: {fileID: 1087019283}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1068720208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2262,7 +2281,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7748280012608716531, guid: ffd3e66d4df2a554fb995d41f7ffe4c2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 339430854}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8303331199027406964, guid: ffd3e66d4df2a554fb995d41f7ffe4c2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1644746865}
   m_SourcePrefab: {fileID: 100100000, guid: ffd3e66d4df2a554fb995d41f7ffe4c2, type: 3}
 --- !u!1 &1097123014
 GameObject:
@@ -2660,8 +2682,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 100
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2833,6 +2855,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7748280012608716531, guid: ffd3e66d4df2a554fb995d41f7ffe4c2, type: 3}
   m_PrefabInstance: {fileID: 1087019283}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1644746865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025150372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b7ce2f6d8e3ce428d9ffb049bba3c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: Shoot this chest to open it!
 --- !u!1 &1694620646
 GameObject:
   m_ObjectHideFlags: 0
@@ -2873,8 +2908,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 100 / 100
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
