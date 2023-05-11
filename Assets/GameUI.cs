@@ -13,7 +13,7 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
-        coinCounter.text = collectables.coins.ToString() + "/ 100";
+        coinCounter.text = collectables.coins.ToString();
         health.text = ((int)player.lerpedHealth).ToString();
     }
 }
