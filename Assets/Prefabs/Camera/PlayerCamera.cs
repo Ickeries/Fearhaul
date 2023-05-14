@@ -39,25 +39,8 @@ public class PlayerCamera : MonoBehaviour
         {
             rotationY = Mathf.LerpAngle(rotationY, player.transform.eulerAngles.y, 5.0f * Time.deltaTime);
             pivot.transform.eulerAngles = new Vector3(0.0f, rotationY, 0.0f);
-            if (player.getTarget() != null)
-            {
-                Vector3 toPosition = player.transform.position + (player.getTarget().transform.position - player.transform.position) * 0.5f;
-                pivot.transform.position = Vector3.Lerp(pivot.transform.position, toPosition, 10.0f * Time.deltaTime);
-                //Vector3 flattenedVector = new Vector3(player.getTarget().transform.position.x, 0.0f, player.getTarget().transform.position.z);
-                //Vector3 direction = (flattenedVector - pivot.transform.position).normalized;
-                //Vector3 direction2 = (flattenedVector - transform.position).normalized;
-                //pivot.transform.forward = Vector3.Lerp(pivot.transform.forward, direction, 5.0f * Time.deltaTime);
-                //transform.forward = Vector3.Lerp(transform.forward, direction2, 5.0f * Time.deltaTime);
-                float dist = Vector3.Distance(toPosition, player.transform.position);
-                dist = Mathf.Clamp(dist, 60.0f, 500.0f);
-                toZoom = dist;
-                
-            }
-            else
-            {
-                pivot.transform.position = Vector3.Lerp(pivot.transform.position, player.getAimPosition(), 25.0f * Time.deltaTime);
-                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.identity, 5.0f * Time.deltaTime);
-            }
+            pivot.transform.position = Vector3.Lerp(pivot.transform.position, player.getAimPosition(), 25.0f * Time.deltaTime);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.identity, 5.0f * Time.deltaTime);
         }
         Vector3 p = this.transform.localPosition;
         this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(p.x, p.y, -toZoom), 2.5f * Time.deltaTime);

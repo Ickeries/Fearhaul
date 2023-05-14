@@ -168,19 +168,12 @@ public class PlayerController : MonoBehaviour
 
         if (aiming == true)
         {
-            if (target == null)
+            float distance;
+            if (plane.Raycast(ray, out distance))
             {
-                float distance;
-                if (plane.Raycast(ray, out distance))
-                {
-                    Vector3 hitPoint = ray.GetPoint(distance);
-                    Vector3 weaponDirection = (hitPoint - weaponsTransform.position).normalized;
-                    weaponsTransform.forward = Vector3.Lerp(weaponsTransform.forward, new Vector3(weaponDirection.x, 0.0f, weaponDirection.z), 15.0f * Time.deltaTime);
-                }
-            }
-            else
-            {
-                weaponsTransform.LookAt(new Vector3(target.transform.position.x, 0.0f, target.transform.position.z));
+                Vector3 hitPoint = ray.GetPoint(distance);
+                Vector3 weaponDirection = (hitPoint - weaponsTransform.position).normalized;
+                weaponsTransform.forward = Vector3.Lerp(weaponsTransform.forward, new Vector3(weaponDirection.x, 0.0f, weaponDirection.z), 15.0f * Time.deltaTime);
             }
         }
         else
@@ -192,10 +185,7 @@ public class PlayerController : MonoBehaviour
         // Firing
         if (fire.ReadValue<float>() == 1.0f)
         {
-            if (aiming == true)
-            {
-                currentWeapon.Fire();
-            }
+            currentWeapon.Fire();
         }
 
 
@@ -270,12 +260,7 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 getAimPosition()
     {
-        if (aiming == true)
-            return transform.position + weaponsTransform.forward * 8.0f;
-        else
-        {
-            return transform.position;
-        }
+        return transform.position;
 
     }
 
@@ -291,7 +276,7 @@ public class PlayerController : MonoBehaviour
             Stats stats = other.collider.GetComponent<Stats>();
             if (stats.setKnockBack((other.transform.position - this.transform.position).normalized * 16.0f) == true)
             {
-                AudioSource.PlayClipAtPoint(chargeHitSounds[Random.Range(0, chargeHitSounds.Length-1)], this.transform.position, 1.0f);
+                //AudioSource.PlayClipAtPoint(chargeHitSounds[Random.Range(0, chargeHitSounds.Length-1)], this.transform.position, 1.0f);
                 stats.addHealth(-50f);
             }
         }

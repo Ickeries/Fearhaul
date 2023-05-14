@@ -155,7 +155,7 @@ MonoBehaviour:
   gravityMultiplier: 9.8
   speed: 300
   speedDamp: 0
-  explosion_prefab: {fileID: 4740719344561975414, guid: baa3f3b6a35466b4689dffb1363f8bc3, type: 3}
+  explosion_prefab: {fileID: 100014, guid: 5332791ebce075d4a9e56f4581e7fb47, type: 3}
   splash: {fileID: 179044, guid: 8a3142fc12013184fbf3dd43c8f2956e, type: 3}
   collideLayers:
     serializedVersion: 2

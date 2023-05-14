@@ -14,7 +14,6 @@ public class Projectile : MonoBehaviour
     public float speed = 300.0f;
     [SerializeField] private float speedDamp;
     public GameObject explosion_prefab;
-    public GameObject splash;
     public LayerMask collideLayers;
     // Start is called before the first frame update
     public AnimationCurve damageFalloff;
@@ -72,7 +71,7 @@ public class Projectile : MonoBehaviour
         {
             if (explosion_prefab != null)
             {
-                GameObject explosion_instance = Instantiate(explosion_prefab, other.gameObject.transform.position, Quaternion.identity);
+                GameObject explosion_instance = Instantiate(explosion_prefab, this.transform.position, Quaternion.identity);
             }
             Destroy(this.gameObject);
         }

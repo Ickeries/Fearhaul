@@ -24,6 +24,15 @@ public class Stats : MonoBehaviour
 
     private float infoTimer = 0.0f;
     public float Height = 1.0f;
+    [SerializeField] private GameObject explosion;
+    [SerializeField] private ParticleSystem burningParticles;
+    [SerializeField] private float fireAccumulationThreshold = 100f;
+    [SerializeField] private float fireDissipationSpeed = 1.0f;
+    [SerializeField] private float burningTickRate = 0.5f;
+    private float burningTick = 0.0f;
+    private float fireAccumulation = 0.0f;
+    private bool burning = false;
+ 
 
     private Vector3 knockBack;
     [SerializeField] private AudioClip hurtSound;
@@ -43,6 +52,7 @@ public class Stats : MonoBehaviour
         
         if (isDead() && destroyWhenDead)
         {
+            createExplosion(6.0f);
             spawnRandomLoot(lootAmount, this.transform.position);
             Destroy(this.gameObject);
         }
@@ -50,6 +60,34 @@ public class Stats : MonoBehaviour
         {
             slider.value =  (float)lerpedHealth / (float)maxHealth;
         }
+
+        fireAccumulation -= fireDissipationSpeed * Time.deltaTime;
+        fireAccumulation = Mathf.Clamp(fireAccumulation, 0, fireAccumulationThreshold + 1.0f);
+
+        if (burning == true)
+        {
+            burningTick += Time.deltaTime;
+            if (burningTick > burningTickRate)
+            {
+                burningTick = 0.0f;
+                addHealth(-5f);
+            }
+
+            if (fireAccumulation <= 0.1f)
+            {
+                burning = false;
+                if(burningParticles != null)
+                {
+                    burningParticles.gameObject.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            burningTick = 0.0f;
+        }
+
+    
     }
 
     public void addHealth(float health)
@@ -65,6 +103,23 @@ public class Stats : MonoBehaviour
             if(animator != null)
             {
                 animator.Play("hurt", 0, 0.0f);
+            }
+        }
+    }
+
+    public void addFireAccumulation(float accumulation)
+    {
+        if (burning == false)
+        {
+            fireAccumulation += accumulation;
+        }
+        print(fireAccumulation + " and " + fireAccumulationThreshold);
+        if (fireAccumulation >= fireAccumulationThreshold && burning == false)
+        {
+            burning = true;
+            if (burningParticles != null)
+            {
+                burningParticles.gameObject.SetActive(true);
             }
         }
     }
@@ -106,6 +161,15 @@ public class Stats : MonoBehaviour
             }
         }
 
+    }
+
+    public void createExplosion(float newScale)
+    {
+        if (explosion != null)
+        {
+            GameObject explosionInstance = Instantiate(explosion, this.transform.position, Quaternion.identity);
+            explosionInstance.transform.localScale = Vector3.one * newScale;
+        }
     }
 
     public void push(Vector3 direction)
