@@ -59,12 +59,13 @@ public class Projectile : MonoBehaviour
         direction = newDirection;
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
-        if (other.GetComponent<Stats>())
+        if (other.gameObject.GetComponent<Stats>())
         {
-            other.GetComponent<Stats>().addHealth(-attackPower);
-            other.GetComponent<Stats>().addStagger(10);
+            float r = Random.Range(attackPower - 5.0f, attackPower + 5.0f);
+            other.gameObject.GetComponent<Stats>().addHealth(-r);
+            other.gameObject.GetComponent<Stats>().addStagger(10);
         }
 
         if ( (collideLayers.value & 1 << other.gameObject.layer) > 0)

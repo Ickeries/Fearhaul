@@ -174,10 +174,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91503f755dc2e444b883885eaba7bee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: Machine Gun
+  Level: 1
+  damageMultiplier: 1
+  damageCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.5656086
+      outSlope: 1.5656086
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.13252147
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.06071835
+      outSlope: 0.06071835
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.13501918
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   projectileSpawn: {fileID: 6040744749136719264}
-  spread: 1
-  timeBetweenShots: 0.5
-  shootSpeedMultiplier: 1.1
+  spread: 10
+  timeBetweenShots: 0.1
+  shootSpeedMultiplier: 1
   recoilStrength: 0.1
   timeToReload: 1
   maxAmmo: 999
@@ -185,7 +212,7 @@ MonoBehaviour:
   projectiles:
   - {fileID: 2690096911647796819, guid: 81a63f9fda881644e9dfc1b5e9280f9d, type: 3}
   alternateProjectile: {fileID: 0}
-  flashes: {fileID: 6971561798806089110}
+  flashes: {fileID: 905866737948820645}
   fireAudios:
   - {fileID: 8300000, guid: 90ab23238f31f2040a2366e4ba12705c, type: 3}
 --- !u!1 &699309455649294773

@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
 public class octopusScript : MonoBehaviour
 {
     private enum STATES {Wander, Alert, Staggered, Shoot}
@@ -10,11 +11,13 @@ public class octopusScript : MonoBehaviour
     private Stats stats; 
     private Buoyancy buoyancy;
     private Animator animator;
-
+    [SerializeField] private Slider healthSlider;
     GameObject target = null;
 
     private float wanderTime = 2.0f;
     private Vector3 wanderPosition = new Vector3(0.0f, 0.0f, 0.0f);
+
+    public GameObject bossHealth;
     
     // Start is called before the first frame update
     void Start()
@@ -49,6 +52,10 @@ public class octopusScript : MonoBehaviour
     void FixedUpdate()
     {
         //Gravity
+        if (healthSlider != null)
+        {
+            healthSlider.value = stats.getHealth();
+        }
         rigidbody.AddForce(new Vector3(0.0f, -32.0f, 0.0f), ForceMode.Acceleration);
 
         Vector3 direction = new Vector3(0.0f, 0.0f, 0.0f);
@@ -93,6 +100,22 @@ public class octopusScript : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             target = collision.gameObject;
+            if (bossHealth != null)
+            {
+                bossHealth.SetActive(true);
+            }
+          
+        }
+    }
+
+    private void OnTriggerExit(Collider collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            if (bossHealth != null)
+            {
+                bossHealth.SetActive(false);
+            }
         }
     }
 }

@@ -104,6 +104,12 @@ public class Stats : MonoBehaviour
             {
                 animator.Play("hurt", 0, 0.0f);
             }
+
+            if (damageText != null)
+            {
+                GameObject damageTextInstance = Instantiate(damageText, this.transform.position + new Vector3(Random.Range(-5.0f, 5.0f), Random.Range(5.0f, 10.0f), Random.Range(-5.0f, 5.0f)), Quaternion.identity);
+                damageTextInstance.GetComponent<DamageText>().setValue((int)health);
+            }
         }
     }
 
@@ -113,7 +119,6 @@ public class Stats : MonoBehaviour
         {
             fireAccumulation += accumulation;
         }
-        print(fireAccumulation + " and " + fireAccumulationThreshold);
         if (fireAccumulation >= fireAccumulationThreshold && burning == false)
         {
             burning = true;
@@ -156,7 +161,7 @@ public class Stats : MonoBehaviour
             // Makes the loot shoot upwards for some oomph.
             if (LootInstance.GetComponent<Rigidbody>() != null)
             {
-                var launchDirection = new Vector3(Random.Range(-1.0f, 1.0f) * 10.0f, Random.Range(4.0f, 8.0f) * lootLaunchStrength, Random.Range(-1.0f, 1.0f) * 10.0f);
+                var launchDirection = new Vector3(Random.Range(-1.0f, 1.0f) * lootLaunchStrength, Random.Range(4.0f, 8.0f) * lootLaunchStrength, Random.Range(-1.0f, 1.0f) * 10.0f);
                 LootInstance.GetComponent<Rigidbody>().AddForce(launchDirection, ForceMode.Impulse);
             }
         }
@@ -188,6 +193,11 @@ public class Stats : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public int getHealth()
+    {
+        return lerpedHealth;
     }
 
     public void showInfo()

@@ -6,10 +6,11 @@ public class MeleeWeapon : Weapon
 {
 
     [SerializeField] private int damage = 10;
-
+    [SerializeField] private float maxAmmo = 30.0f;
+    private float ammo = 0.0f;
     bool attacking = false;
-    float attackingTimer = 0.0f;
 
+    float attackingTimer = 0.0f;
     float hurtTimer = .3f;
     [SerializeField] private Collider hurtbox;
     [SerializeField] private ParticleSystem flames;
@@ -17,7 +18,6 @@ public class MeleeWeapon : Weapon
 
 
     private List<Stats> targets = new List<Stats>();
-
     [SerializeField] private LayerMask collideWith;
 
 
@@ -48,7 +48,7 @@ public class MeleeWeapon : Weapon
                 {
                     if (targets[i] != null)
                     {
-                        targets[i].addHealth(-damage);
+                        targets[i].addHealth(-(int)(damage*damageMultiplier));
                         targets[i].addFireAccumulation(fireAmount);
                     }
                     else
@@ -67,9 +67,19 @@ public class MeleeWeapon : Weapon
         {
             flames.Play();
         }
+        ammo += Time.deltaTime;
+        if (ammo > maxAmmo)
+        {
+            ammo = 0.0f;
+        }
         attacking = true;
         attackingTimer = 0.5f;
         return 1;
+    }
+
+    public override float getAmmo()
+    {
+        return maxAmmo - ammo;
     }
 
 

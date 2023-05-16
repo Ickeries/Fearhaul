@@ -9,6 +9,8 @@ TagManager:
   - Magnet
   - WeaponPickup
   - Coin
+  - Gas
+  - Level
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - PostProcessing
   - Focusable
   - Items
-  - 
+  - Coins
   - 
   - 
   - 

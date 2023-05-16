@@ -17,7 +17,7 @@ public class PlayerCamera : MonoBehaviour
 
 
     private GameObject lockOnTarget = null;
-    private float toZoom = 60.0f;
+    private float toZoom = 30.0f;
     public float aiming = 0.0f;
 
     public PlayerInput playerInput;
@@ -43,7 +43,7 @@ public class PlayerCamera : MonoBehaviour
             transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.identity, 5.0f * Time.deltaTime);
         }
         Vector3 p = this.transform.localPosition;
-        this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(p.x, p.y, -toZoom), 2.5f * Time.deltaTime);
+        //this.transform.localPosition = Vector3.Lerp(this.transform.localPosition, new Vector3(p.x, p.y, -toZoom), 2.5f * Time.deltaTime);
     }
 
     public void lockOnTo(GameObject lockOnObject)

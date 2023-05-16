@@ -68,6 +68,7 @@ public class GunWeapon : Weapon
             GameObject newProjectile = Instantiate(projectiles[Random.Range(0, projectiles.Count - 1)], projectileSpawn.position, Quaternion.identity);
             newProjectile.transform.rotation = this.transform.rotation;
             newProjectile.transform.Rotate(new Vector3(0.0f, Random.Range(-spread, spread), 0.0f));
+            newProjectile.GetComponent<Projectile>().attackPower = (int)(newProjectile.GetComponent<Projectile>().attackPower * damageMultiplier);
             currentAmmo -= 1;
             if (currentAmmo <= 0)
             {
@@ -80,6 +81,10 @@ public class GunWeapon : Weapon
         return 1;
     }
 
+    public override float getAmmo()
+    {
+        return currentAmmo;
+    }
     void muzzleFlash()
     {
         int randomInt = Random.Range(0, flashes.childCount);

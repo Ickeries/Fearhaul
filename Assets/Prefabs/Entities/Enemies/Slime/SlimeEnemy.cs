@@ -53,7 +53,9 @@ public class SlimeEnemy : MonoBehaviour
             case States.circle:
                 break;
             case States.chase:
-                rigidbody.AddForce((target.transform.position - this.transform.position).normalized * 50.0f, ForceMode.Force);
+                direction = (target.transform.position - this.transform.position).normalized;
+                rigidbody.AddForce(direction * 50.0f, ForceMode.Force);
+                
                 break;
         }
 
